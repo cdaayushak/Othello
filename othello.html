@@ -571,6 +571,7 @@ alpha-beta pruning.
         return column + row;
       }
 
+      // SETTING UP THE STARTING OTHELLO BOARD
       // first I make the empty board, then add the 4 pieces in the middle
       function newBoard() {
         const board = Array.from({ length: S }, () => Array(S).fill(E));
@@ -583,7 +584,7 @@ alpha-beta pruning.
         return board;
       }
 
-      // this checks which pieces would flip if I play on this square
+      // this checks which pieces would flip if I play on this square in all directions
       function flips(board, row, column, player) {
         // I cannot put a piece on a square that already has one
         if (board[row][column] !== E) {
@@ -626,6 +627,7 @@ alpha-beta pruning.
         return piecesToFlip;
       }
 
+      // GENERATE ALL LEGAL MOVES FOR A PLAYER
       // check every square and keep the moves that flip something
       function movesFor(board, player) {
         const moves = [];
@@ -641,6 +643,7 @@ alpha-beta pruning.
         return moves;
       }
 
+      // APPLY THE MOVE AND FLIP CAPTURED DISCS
       // copy the board so I can make the move without changing the old one
       function apply(board, move, player) {
         const nextBoard = board.map((row) => row.slice());
@@ -655,6 +658,7 @@ alpha-beta pruning.
         return nextBoard;
       }
 
+      // COUNT PLAYER'S DISCS
       // this counts how many pieces one player has on the board
       function count(board, player) {
         let total = 0;
@@ -670,6 +674,7 @@ alpha-beta pruning.
         return total;
       }
 
+      // CHECK IF THE GAME IS OVER
       // the game is only over when neither side can make a move
       function over(board) {
         const blackMoves = movesFor(board, B);
@@ -678,8 +683,7 @@ alpha-beta pruning.
         return blackMoves.length === 0 && whiteMoves.length === 0;
       }
 
-      // ===== computer moves: minimax and alpha-beta =====
-
+      // THIS IS HEURISTIC EVALUATION OF THE BOARD.
       // this gives the board a score from the computer player's side
       function evaluate(board, me) {
         if (over(board)) {
@@ -715,6 +719,8 @@ alpha-beta pruning.
         return positionScore + 8 * moveDifference + pieceScore;
       }
 
+      // SORTS THE LEGAL MOVES
+      //  ORDER MOVES TO HELP ALPHA-BETA PRUNING. 
       // try the better square scores first, so pruning can skip more later
       function ordered(board, player) {
         const moves = movesFor(board, player);
@@ -724,7 +730,12 @@ alpha-beta pruning.
         });
       }
 
+      // ===== MINIMAX ALGORITHM START =====
+      // bestMove() tries each legal move. Its recursive search() checks future turns,
+      // with the computer maximizing its score and the opponent minimizing it.
       // this compares the possible moves and picks the best one from the search
+
+      // algorithm entry point. it returns the best move and some stats about the search
       function bestMove(board, me, depth, useAB, debug) {
         const stats = { states: 0, lines: [], dropped: 0 };
 
@@ -737,6 +748,7 @@ alpha-beta pruning.
           }
         }
 
+        // search() function does the recursive lookahead
         // this checks the next turns until the depth runs out
         function search(board, depthLeft, player, alpha, beta, path) {
           stats.states++;
@@ -789,7 +801,9 @@ alpha-beta pruning.
               beta = Math.min(beta, bestValue);
             }
 
-            // stop this branch if it cannot change the choice anymore
+            // ALPHA-BETA PRUNING CUT OFF
+            // if the other side has a better choice, stop looking at this branch
+            // because they cannot change the result.
             if (useAB && beta <= alpha) {
               if (debug && index < moves.length - 1) {
                 const skippedMoves = moves
@@ -1202,7 +1216,7 @@ alpha-beta pruning.
       function Controls(p) {
         // this shows Make move and the extra buttons when dev mode is on
 
-        // add the selected style to the button I picked
+        // adding selected style to the buttons
         const sel = (on) => (on ? "sel" : "");
         return html`
           <div id="ctl">
