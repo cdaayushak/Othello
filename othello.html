@@ -1,0 +1,1444 @@
+<!doctype html>
+<!--
+Author: Aayusha Khadka
+Date: November 16, 2026
+Project: An Intelligent Othello Player
+Description: A browser-based Othello game for two human players or one human
+player against a computer opponent that uses minimax search and optional
+alpha-beta pruning.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Othello</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap"
+    />
+
+    <style>
+      /* these are the main colors. changing them updates the whole page */
+      :root {
+        --bg: #6b4423;
+        --felt: #8b5a2b;
+        --wood: #a9743f;
+        --line: #3b2312;
+        --text: #f6e7cf;
+        --btn: #c28a50;
+        --btext: #2b1a0a;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+
+      /* basic page layout and the buttons and name inputs */
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Fredoka, "Segoe UI", system-ui, sans-serif;
+        text-align: center;
+        transition:
+          background 0.4s,
+          color 0.4s;
+      }
+
+      body {
+        padding: 64px 14px 14px;
+        min-height: 100vh;
+        font-size: 16px;
+      }
+
+      section {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        font-size: clamp(38px, 9vw, 60px);
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: 2px;
+      }
+
+      .sub {
+        margin: 2px 0 8px;
+        opacity: 0.85;
+      }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 12px 0;
+        align-items: center;
+      }
+
+      button,
+      select,
+      input {
+        font: inherit;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--btext);
+        background: var(--btn);
+        border: 0;
+        border-radius: 999px;
+        padding: 9px 18px;
+        cursor: pointer;
+        box-shadow: 0 3px 0 var(--line);
+      }
+
+      button.sel {
+        box-shadow:
+          0 0 0 3px var(--text),
+          0 3px 0 3px var(--line);
+      }
+
+      button:hover {
+        filter: brightness(1.08);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      input {
+        cursor: text;
+        text-align: center;
+        width: 220px;
+        background: #ffffff40;
+        color: var(--text);
+        box-shadow: inset 0 0 0 2px var(--text);
+      }
+
+      input::placeholder {
+        color: var(--text);
+        opacity: 0.55;
+      }
+
+      select {
+        padding: 9px 14px;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        margin: 18px 0 6px;
+        opacity: 0.9;
+      }
+
+      .hint-t {
+        font-size: 13px;
+        opacity: 0.8;
+        margin: 4px 0;
+      }
+
+      /* the turn title, player names and scores go above the board */
+      #back {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        font-size: 24px;
+      }
+
+      #title {
+        font-size: clamp(22px, 5vw, 32px);
+        font-weight: 600;
+        margin: 8px 0 12px;
+        min-height: 40px;
+      }
+
+      #score {
+        display: flex;
+        justify-content: space-between;
+        max-width: 560px;
+        margin: 0 auto 12px;
+        gap: 8px;
+        font-size: 15px;
+      }
+
+      .nm {
+        width: 130px;
+        padding: 3px 6px;
+        background: transparent;
+        box-shadow: none;
+        border-bottom: 2px dashed var(--text);
+        border-radius: 0;
+        font-weight: 600;
+      }
+
+      .pts {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      /* this holds the board and the piece stacks on both sides */
+      #frame {
+        display: grid;
+        grid-template-columns: 5% 1fr 5%;
+        width: min(100%, 560px);
+        margin: 0 auto;
+        background: var(--wood);
+        border: 5px solid var(--line);
+        border-radius: 12px;
+        padding: 6px;
+        gap: 6px;
+      }
+
+      .stack {
+        border-radius: 20px/6px;
+        min-height: 100%;
+      }
+
+      .stack.k {
+        background: repeating-linear-gradient(#3a3340 0 3px, #000 3px 4px);
+      }
+
+      .stack.w {
+        background: repeating-linear-gradient(#f6eef8 0 3px, #8f7aa0 3px 4px);
+      }
+
+      #board {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        aspect-ratio: 1;
+        gap: 3px;
+        background: var(--line);
+        border: 3px solid var(--line);
+      }
+
+      /* each square can have a piece or a pink dot for a valid move */
+      .cell {
+        background: var(--felt);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.4s;
+      }
+
+      .cell.hint {
+        cursor: pointer;
+      }
+
+      .cell.hint::after {
+        content: "";
+        width: 22%;
+        height: 22%;
+        border-radius: 50%;
+        background: #ff8fbd;
+        box-shadow: 0 0 10px 3px #ff8fbd99;
+        position: absolute;
+      }
+
+      .cell {
+        position: relative;
+      }
+
+      .cell.hint:hover {
+        background: #ffffff26;
+      }
+
+      /* gradients make the pieces look round. this also handles the flip */
+      .disc {
+        width: 82%;
+        height: 82%;
+        border-radius: 50%;
+        box-shadow: 0 3px 4px #0009;
+      }
+
+      .disc.B {
+        background: radial-gradient(circle at 34% 30%, #7a7480, #1a161e 55%, #000);
+      }
+
+      .disc.W {
+        background: radial-gradient(circle at 34% 30%, #fff, #efe3f4 55%, #b7a2c4);
+      }
+
+      .disc.flip {
+        animation: flip 0.45s;
+      }
+
+      @keyframes flip {
+        50% {
+          transform: scaleX(0.05);
+        }
+      }
+
+      /* controls below the board and the extra dev information */
+      #ctl {
+        max-width: 620px;
+        margin: 14px auto 0;
+      }
+
+      #info {
+        font-size: 14px;
+        line-height: 1.8;
+        margin: 8px 0;
+      }
+
+      #debug {
+        font:
+          11px/1.5 ui-monospace,
+          Consolas,
+          monospace;
+        text-align: left;
+        max-width: 900px;
+        margin: 10px auto;
+        overflow-x: auto;
+        white-space: pre;
+        background: #0003;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      /* the kangaroo on the start screen hops and waves here */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .kang {
+        width: min(46vw, 190px);
+        height: auto;
+        animation: hop 1.6s ease-in-out infinite;
+        overflow: visible;
+      }
+
+      @keyframes hop {
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      .wave {
+        transform-origin: 138px 112px;
+        animation: wave 0.7s ease-in-out infinite alternate;
+      }
+
+      @keyframes wave {
+        from {
+          transform: rotate(-8deg);
+        }
+        to {
+          transform: rotate(38deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .kang,
+        .wave {
+          animation: none;
+        }
+      }
+
+      /* toolbar on the right for colors, level and dev mode */
+      #rail {
+        position: fixed;
+        top: 84px;
+        right: 14px;
+        width: 102px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .ri {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sws {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 0 4px;
+      }
+
+      .sw {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        border: 3px solid #3b2312;
+        border-radius: 50%;
+        box-shadow: none;
+      }
+
+      .sw.sel {
+        box-shadow:
+          0 0 0 3px #f6e7cf,
+          0 0 0 6px #3b2312;
+      }
+
+      .sw:focus-visible,
+      .rail-action:focus-visible {
+        outline: 3px solid var(--text);
+        outline-offset: 5px;
+      }
+
+      .ri > button.rail-action {
+        width: 102px;
+        min-height: 56px;
+        padding: 9px 8px;
+        background: var(--btn);
+        box-shadow: 0 3px 0 var(--line);
+        color: var(--btext);
+        border-radius: 19px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        filter: none;
+      }
+
+      .lb {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.1;
+      }
+
+      .ri > button.rail-action strong {
+        font-size: 16px;
+        line-height: 1.1;
+      }
+
+      .ri > button.rail-action:hover,
+      .ri > button.rail-action.open {
+        filter: brightness(1.08);
+      }
+
+      /* the level choices open next to the toolbar */
+      .pop {
+        position: absolute;
+        right: calc(100% + 8px);
+        top: 0;
+        background: var(--wood);
+        color: var(--text);
+        border-radius: 16px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 190px;
+        box-shadow: 0 4px 0 var(--line);
+        text-align: left;
+      }
+
+      .pop h4 {
+        margin: 0 0 2px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        flex: none;
+      }
+
+      .opt {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        text-align: left;
+      }
+
+      .opt small {
+        margin-left: auto;
+        opacity: 0.7;
+      }
+
+      .opt .dot {
+        background: transparent;
+        box-shadow: inset 0 0 0 2px var(--btext);
+      }
+
+      .opt.on .dot {
+        background: var(--btext);
+      }
+
+      /* leave space for the toolbar, then make it smaller on phones */
+      body {
+        padding-right: 130px;
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 40px 88px 14px 10px;
+        }
+        #rail {
+          top: 40px;
+          right: 8px;
+          width: 70px;
+          gap: 14px;
+        }
+        .ri > button.rail-action {
+          width: 70px;
+          min-height: 52px;
+          border-radius: 16px;
+        }
+        .sws {
+          gap: 12px;
+        }
+        .sw {
+          width: 32px;
+          height: 32px;
+        }
+        .pop {
+          min-width: 180px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- React puts the start screen and game inside this div -->
+    <div id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+    <script>
+      // these let me keep track of things and update the screen
+      const { useState, useEffect, useRef } = React;
+      const html = htm.bind(React.createElement);
+
+      // ===== board setup and game rules =====
+
+      // S is the board size. B is black, W is white and E is an empty square
+
+      // DIRS has all 8 directions to check around a move
+      const S = 8,
+        B = 1,
+        W = 2,
+        E = 0,
+        DIRS = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [0, -1],
+          [0, 1],
+          [1, -1],
+          [1, 0],
+          [1, 1],
+        ];
+
+      // these are the scores for each square. corners are good, so they get 100
+      const WT = [
+        [100, -20, 10, 5, 5, 10, -20, 100],
+        [-20, -50, -2, -2, -2, -2, -50, -20],
+        [10, -2, -1, -1, -1, -1, -2, 10],
+        [5, -2, -1, -1, -1, -1, -2, 5],
+        [5, -2, -1, -1, -1, -1, -2, 5],
+        [10, -2, -1, -1, -1, -1, -2, 10],
+        [-20, -50, -2, -2, -2, -2, -50, -20],
+        [100, -20, 10, 5, 5, 10, -20, 100],
+      ];
+
+      // this gives me the other player, since black is 1 and white is 2
+      function opp(player) {
+        return 3 - player;
+      }
+
+      // this makes a move easier to read in debug, like A1 instead of [0, 0]
+      function nm(move) {
+        const column = "ABCDEFGH"[move[1]];
+        const row = move[0] + 1;
+
+        return column + row;
+      }
+
+      // first I make the empty board, then add the 4 pieces in the middle
+      function newBoard() {
+        const board = Array.from({ length: S }, () => Array(S).fill(E));
+
+        board[3][3] = W;
+        board[3][4] = B;
+        board[4][3] = B;
+        board[4][4] = W;
+
+        return board;
+      }
+
+      // this checks which pieces would flip if I play on this square
+      function flips(board, row, column, player) {
+        // I cannot put a piece on a square that already has one
+        if (board[row][column] !== E) {
+          return [];
+        }
+
+        let piecesToFlip = [];
+
+        // try each direction from the square I picked
+        for (const [rowStep, columnStep] of DIRS) {
+          const line = [];
+          let nextRow = row + rowStep;
+          let nextColumn = column + columnStep;
+
+          while (
+            nextRow >= 0 &&
+            nextRow < S &&
+            nextColumn >= 0 &&
+            nextColumn < S &&
+            board[nextRow][nextColumn] === opp(player)
+          ) {
+            line.push([nextRow, nextColumn]);
+            nextRow += rowStep;
+            nextColumn += columnStep;
+          }
+
+          // the line only counts if my own piece is at the other end
+          if (
+            line.length > 0 &&
+            nextRow >= 0 &&
+            nextRow < S &&
+            nextColumn >= 0 &&
+            nextColumn < S &&
+            board[nextRow][nextColumn] === player
+          ) {
+            piecesToFlip = piecesToFlip.concat(line);
+          }
+        }
+
+        return piecesToFlip;
+      }
+
+      // check every square and keep the moves that flip something
+      function movesFor(board, player) {
+        const moves = [];
+
+        for (let row = 0; row < S; row++) {
+          for (let column = 0; column < S; column++) {
+            if (flips(board, row, column, player).length > 0) {
+              moves.push([row, column]);
+            }
+          }
+        }
+
+        return moves;
+      }
+
+      // copy the board so I can make the move without changing the old one
+      function apply(board, move, player) {
+        const nextBoard = board.map((row) => row.slice());
+        const piecesToFlip = flips(board, move[0], move[1], player);
+
+        for (const [row, column] of piecesToFlip) {
+          nextBoard[row][column] = player;
+        }
+
+        nextBoard[move[0]][move[1]] = player;
+
+        return nextBoard;
+      }
+
+      // this counts how many pieces one player has on the board
+      function count(board, player) {
+        let total = 0;
+
+        for (const row of board) {
+          for (const piece of row) {
+            if (piece === player) {
+              total++;
+            }
+          }
+        }
+
+        return total;
+      }
+
+      // the game is only over when neither side can make a move
+      function over(board) {
+        const blackMoves = movesFor(board, B);
+        const whiteMoves = movesFor(board, W);
+
+        return blackMoves.length === 0 && whiteMoves.length === 0;
+      }
+
+      // ===== computer moves: minimax and alpha-beta =====
+
+      // this gives the board a score from the computer player's side
+      function evaluate(board, me) {
+        if (over(board)) {
+          const difference = count(board, me) - count(board, opp(me));
+
+          return 10000 * Math.sign(difference) + difference;
+        }
+
+        // add my square scores and take away the other player's scores
+        let positionScore = 0;
+
+        for (let row = 0; row < S; row++) {
+          for (let column = 0; column < S; column++) {
+            if (board[row][column] === me) {
+              positionScore += WT[row][column];
+            } else if (board[row][column] !== E) {
+              positionScore -= WT[row][column];
+            }
+          }
+        }
+
+        // having more choices for the next move is good too
+        const moveDifference =
+          movesFor(board, me).length - movesFor(board, opp(me)).length;
+        const emptySquares = 64 - count(board, B) - count(board, W);
+        let pieceScore = 0;
+
+        // near the end I also care more about the number of pieces
+        if (emptySquares < 16) {
+          pieceScore = 3 * (count(board, me) - count(board, opp(me)));
+        }
+
+        return positionScore + 8 * moveDifference + pieceScore;
+      }
+
+      // try the better square scores first, so pruning can skip more later
+      function ordered(board, player) {
+        const moves = movesFor(board, player);
+
+        return moves.sort((first, second) => {
+          return WT[second[0]][second[1]] - WT[first[0]][first[1]];
+        });
+      }
+
+      // this compares the possible moves and picks the best one from the search
+      function bestMove(board, me, depth, useAB, debug) {
+        const stats = { states: 0, lines: [], dropped: 0 };
+
+        // keep some debug lines, but stop the text from getting too big
+        function log(message) {
+          if (stats.lines.length < 1500) {
+            stats.lines.push(message);
+          } else {
+            stats.dropped++;
+          }
+        }
+
+        // this checks the next turns until the depth runs out
+        function search(board, depthLeft, player, alpha, beta, path) {
+          stats.states++;
+
+          if (depthLeft === 0 || over(board)) {
+            const value = evaluate(board, me);
+
+            if (debug) {
+              log(path.join(" → ") + "   value = " + value);
+            }
+
+            return value;
+          }
+
+          const moves = ordered(board, player);
+
+          // if this side has no move, let the other side take the turn
+          if (moves.length === 0) {
+            return search(
+              board,
+              depthLeft - 1,
+              opp(player),
+              alpha,
+              beta,
+              path.concat("pass"),
+            );
+          }
+
+          const myTurn = player === me;
+          let bestValue = myTurn ? -Infinity : Infinity;
+
+          for (let index = 0; index < moves.length; index++) {
+            const nextBoard = apply(board, moves[index], player);
+            const nextPath = path.concat(nm(moves[index]));
+            const value = search(
+              nextBoard,
+              depthLeft - 1,
+              opp(player),
+              alpha,
+              beta,
+              nextPath,
+            );
+
+            // my side wants the biggest score, the other side wants the smallest
+            if (myTurn) {
+              bestValue = Math.max(bestValue, value);
+              alpha = Math.max(alpha, bestValue);
+            } else {
+              bestValue = Math.min(bestValue, value);
+              beta = Math.min(beta, bestValue);
+            }
+
+            // stop this branch if it cannot change the choice anymore
+            if (useAB && beta <= alpha) {
+              if (debug && index < moves.length - 1) {
+                const skippedMoves = moves
+                  .slice(index + 1)
+                  .map(nm)
+                  .join(", ");
+                log(path.join(" → ") + "   PRUNED " + skippedMoves);
+              }
+
+              break;
+            }
+          }
+
+          return bestValue;
+        }
+
+        // now compare the first moves and remember the best score
+        let best = null;
+        let bestValue = -Infinity;
+        let alpha = -Infinity;
+
+        for (const move of ordered(board, me)) {
+          const nextBoard = apply(board, move, me);
+          const value = search(nextBoard, depth - 1, opp(me), alpha, Infinity, [
+            nm(move),
+          ]);
+
+          if (debug) {
+            log("==> root move " + nm(move) + " has value " + value);
+          }
+
+          if (value > bestValue) {
+            bestValue = value;
+            best = move;
+          }
+
+          if (useAB) {
+            alpha = Math.max(alpha, bestValue);
+          }
+        }
+
+        return { move: best, ...stats };
+      }
+
+      // ===== colors and difficulty settings =====
+
+      // each theme has background, board, frame, lines, text and button colors
+      const THEMES = [
+        // [bg, cell, wood, line, text, button, button-text]  (first = classic Othello brown)
+        ["#694520", "#855924", "#b78949", "#3b280f", "#f6e7cf", "#b78949", "#2b1a0a"],
+        ["#e6d9f7", "#d9c6f2", "#f4b6cf", "#b58ad6", "#4a2c66", "#f7c3d8", "#4a2c66"],
+        ["#fbe3ec", "#f8d3e2", "#f4b6cf", "#e79ab8", "#6b2c48", "#ffc9dc", "#6b2c48"],
+        ["#d9ebfa", "#bfdcf5", "#a9c8ee", "#7fa6d6", "#274466", "#bfe0ff", "#274466"],
+        ["#fde6d3", "#fbd8bf", "#f5bf9a", "#e39a72", "#6b3a22", "#ffd2b3", "#6b3a22"],
+      ];
+      const VARS = ["--bg", "--felt", "--wood", "--line", "--text", "--btn", "--btext"];
+      const SWATCHES = ["#855924", "#d9c6f2", "#f4d3e2", "#bfdcf5", "#fbd8bf"];
+      const DIFF = [
+        ["Easy", 2],
+        ["Medium", 4],
+        ["Hard", 6],
+      ];
+
+      // ===== toolbar on the right =====
+
+      // keep track of whether the level choices are open
+      function Rail({ theme, setTheme, depth, setDepth, dev, setDev }) {
+        // this shows the color circles and the two toolbar buttons
+
+        const [open, setOpen] = useState(null);
+        ref = useRef(null);
+
+        // close the choices when I click somewhere outside the toolbar
+        useEffect(() => {
+          // close the menu if my click was outside it
+          const f = (e) => {
+            if (ref.current && !ref.current.contains(e.target)) setOpen(null);
+          };
+          document.addEventListener("pointerdown", f);
+          return () => document.removeEventListener("pointerdown", f);
+        }, []);
+
+        // clicking the same button again closes its menu
+        const tog = (k) => setOpen(open === k ? null : k);
+        const level = DIFF.find(([_, d]) => d === depth)?.[0] || "Custom";
+        return html`
+          <div id="rail" ref=${ref}>
+            <div class="ri">
+              <div class="sws" role="radiogroup" aria-label="Table color">
+                ${THEMES.map(
+                  (t, i) => html`
+                    <button
+                      key=${i}
+                      class=${"sw" + (theme === i ? " sel" : "")}
+                      style=${{ background: SWATCHES[i] }}
+                      title=${["Classic", "Lavender", "Pink", "Blue", "Peach"][i]}
+                      aria-label=${["Classic", "Lavender", "Pink", "Blue", "Peach"][i] + " table color"}
+                      role="radio"
+                      aria-checked=${theme === i}
+                      onClick=${() => setTheme(i)}
+                    />
+                  `,
+                )}
+              </div>
+            </div>
+            <div class="ri">
+              <button
+                class=${"rail-action" + (open === "diff" ? " open" : "")}
+                title="Difficulty level"
+                aria-label=${"Difficulty level: " + level}
+                aria-expanded=${open === "diff"}
+                onClick=${() => tog("diff")}
+              >
+                <span class="lb">Level</span>
+                <strong>${level}</strong>
+              </button>
+              ${
+                open === "diff" &&
+                html`
+                  <div class="pop" role="menu">
+                    <h4>Difficulty level</h4>
+                    ${DIFF.map(
+                      ([n, d]) => html`
+                        <button
+                          key=${n}
+                          role="menuitemradio"
+                          aria-checked=${depth === d}
+                          class=${"opt" + (depth === d ? " on" : "")}
+                          onClick=${() => {
+                            setDepth(d);
+                            setOpen(null);
+                          }}
+                        >
+                          <span class="dot"></span>
+                          ${n}
+                          <small>depth ${d}</small>
+                        </button>
+                      `,
+                    )}
+                  </div>
+                `
+              }
+            </div>
+            <div class="ri">
+              <button
+                class="rail-action"
+                title=${"Dev mode: " + (dev ? "on" : "off")}
+                aria-label=${"Dev mode " + (dev ? "on" : "off")}
+                aria-pressed=${dev}
+                onClick=${() => setDev(!dev)}
+              >
+                <span class="lb">Dev mode</span>
+                <strong>${dev ? "On" : "Off"}</strong>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // ===== kangaroo for the start screen =====
+
+      // these SVG shapes make the kangaroo. CSS moves the body and arm
+      function Kangaroo() {
+        // I build the kangaroo from shapes here and animate it with CSS
+
+        return html`
+          <svg
+            class="kang"
+            viewBox="0 0 200 225"
+            role="img"
+            aria-label="A kangaroo waving hello"
+          >
+            <path d="M138 172 Q192 176 188 218 Q150 204 132 188Z" fill="#c98a4e" />
+            <ellipse cx="100" cy="142" rx="46" ry="56" fill="#dca468" />
+            <ellipse cx="100" cy="154" rx="28" ry="38" fill="#f8e0bf" />
+            <path
+              d="M80 150 Q100 166 120 150"
+              fill="none"
+              stroke="#c98a4e"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+            <ellipse cx="76" cy="204" rx="24" ry="9" fill="#c98a4e" />
+            <ellipse cx="124" cy="204" rx="24" ry="9" fill="#c98a4e" />
+            <ellipse
+              cx="62"
+              cy="132"
+              rx="9"
+              ry="18"
+              transform="rotate(18 62 132)"
+              fill="#dca468"
+            />
+            <g class="wave">
+              <ellipse
+                cx="148"
+                cy="100"
+                rx="9"
+                ry="19"
+                transform="rotate(-20 148 100)"
+                fill="#dca468"
+              />
+            </g>
+            <ellipse
+              cx="76"
+              cy="34"
+              rx="9"
+              ry="25"
+              transform="rotate(-14 76 34)"
+              fill="#dca468"
+            />
+            <ellipse
+              cx="76"
+              cy="36"
+              rx="4.5"
+              ry="16"
+              transform="rotate(-14 76 36)"
+              fill="#f7a8c4"
+            />
+            <ellipse
+              cx="124"
+              cy="34"
+              rx="9"
+              ry="25"
+              transform="rotate(14 124 34)"
+              fill="#dca468"
+            />
+            <ellipse
+              cx="124"
+              cy="36"
+              rx="4.5"
+              ry="16"
+              transform="rotate(14 124 36)"
+              fill="#f7a8c4"
+            />
+            <ellipse cx="100" cy="72" rx="33" ry="30" fill="#dca468" />
+            <ellipse cx="100" cy="84" rx="17" ry="12" fill="#f8e0bf" />
+            <ellipse cx="100" cy="79" rx="5.5" ry="3.8" fill="#6b3b2a" />
+            <path
+              d="M94 89 Q100 94 106 89"
+              fill="none"
+              stroke="#6b3b2a"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <circle cx="88" cy="67" r="4.5" fill="#2b1a05" />
+            <circle cx="112" cy="67" r="4.5" fill="#2b1a05" />
+            <circle cx="89.6" cy="65.4" r="1.5" fill="#fff" />
+            <circle cx="113.6" cy="65.4" r="1.5" fill="#fff" />
+            <ellipse cx="76" cy="82" rx="6" ry="4" fill="#f7a8c4" opacity=".75" />
+            <ellipse cx="124" cy="82" rx="6" ry="4" fill="#f7a8c4" opacity=".75" />
+          </svg>
+        `;
+      }
+
+      // ===== start screen =====
+
+      // save the mode, player names and which color I want to play as
+      function Settings({ onStart }) {
+        // this is where I pick the players and names before starting
+
+        const [mode, setMode] = useState(1);
+        const [human, setHuman] = useState(B);
+        const [n1, setN1] = useState("");
+        const [n2, setN2] = useState("");
+
+        // add the selected style to the button I picked
+        const sel = (on) => (on ? "sel" : "");
+        return html`
+          <section>
+            <div class="hero">
+              <${Kangaroo} />
+              <h1>Othello</h1>
+              <p class="sub">hop in and play!</p>
+            </div>
+            <div class="row">
+              <button class=${sel(mode === 1)} onClick=${() => setMode(1)}>
+                1 Player
+              </button>
+              <button class=${sel(mode === 2)} onClick=${() => setMode(2)}>
+                2 Players
+              </button>
+            </div>
+            <label>${mode === 1 ? "Your name" : "Player 1 (Black)"}</label>
+            <input
+              value=${n1}
+              maxlength="12"
+              placeholder=${mode === 1 ? "You" : "Player 1"}
+              onInput=${(e) => setN1(e.target.value)}
+            />
+            ${
+              mode === 2 &&
+              html`
+                <div>
+                  <label>Player 2 (White)</label>
+                  <input
+                    value=${n2}
+                    maxlength="12"
+                    placeholder="Player 2"
+                    onInput=${(e) => setN2(e.target.value)}
+                  />
+                </div>
+              `
+            }
+            ${
+              mode === 1 &&
+              html`
+                <div>
+                  <label>Play as</label>
+                  <div class="row" style=${{ margin: 0 }}>
+                    <button class=${sel(human === B)} onClick=${() => setHuman(B)}>
+                      Black
+                    </button>
+                    <button class=${sel(human === W)} onClick=${() => setHuman(W)}>
+                      White
+                    </button>
+                  </div>
+                </div>
+              `
+            }
+            <div class="hint-t" style=${{ marginTop: 22 }}>
+              Use the controls on the right for table color, difficulty level and dev
+              mode.
+            </div>
+            <div class="row" style=${{ marginTop: 26 }}>
+              <button
+                onClick=${() => onStart({ mode, human, n1: n1.trim(), n2: n2.trim() })}
+              >
+                Start game
+              </button>
+            </div>
+          </section>
+        `;
+      }
+
+      // ===== board and scores =====
+
+      // one square shows a piece, or a hint if I can play there
+      function Cell({ v, hint, flipped, moveNo, onPlay }) {
+        // this draws one square and only lets me click if the move is allowed
+
+        return html`
+          <div
+            class=${"cell" + (hint ? " hint" : "")}
+            onClick=${hint ? onPlay : undefined}
+          >
+            ${
+              v
+                ? html`
+                    <div
+                      key=${flipped ? moveNo : 0}
+                      class=${"disc " + (v === B ? "B" : "W") + (flipped ? " flip" : "")}
+                    />
+                  `
+                : null
+            }
+          </div>
+        `;
+      }
+
+      // go through all 64 squares and check which ones need hints or a flip
+      function Board({ board, legal, humanTurn, prev, moveNo, onPlay }) {
+        // this draws each row and square using the current board
+
+        return html`
+          <div id="board">
+            ${board.map((row, r) =>
+              row.map(
+                (v, c) => html`
+                  <${Cell}
+                    key=${r * 8 + c}
+                    v=${v}
+                    hint=${humanTurn && legal.some((m) => m[0] === r && m[1] === c)}
+                    flipped=${prev && prev[r][c] && prev[r][c] !== v}
+                    moveNo=${moveNo}
+                    onPlay=${() => onPlay([r, c])}
+                  />
+                `,
+              ),
+            )}
+          </div>
+        `;
+      }
+
+      // show both scores. I can also click a name here to change it
+      function Scoreboard({ board, names, setNames }) {
+        // this shows the names and counts the pieces for both sides
+
+        // use the same layout for each player instead of writing it twice
+        const side = (p, label) => html`
+          <div>
+            <div>${label} side</div>
+            <input
+              class="nm"
+              value=${names[p]}
+              maxlength="12"
+              aria-label=${label + " player name"}
+              onInput=${(e) => setNames({ ...names, [p]: e.target.value })}
+            />
+            <div class="pts">${count(board, p)} Pts</div>
+          </div>
+        `;
+        return html`
+          <div id="score">${side(B, "Black")}${side(W, "White")}</div>
+        `;
+      }
+
+      // ===== buttons below the board =====
+
+      // the extra search settings only show when dev mode is on
+      function Controls(p) {
+        // this shows Make move and the extra buttons when dev mode is on
+
+        // add the selected style to the button I picked
+        const sel = (on) => (on ? "sel" : "");
+        return html`
+          <div id="ctl">
+            <div class="row">
+              <button disabled=${p.busy || p.done} onClick=${p.onMove}>Make move</button>
+            </div>
+            ${
+              p.dev &&
+              html`
+                <div class="row">
+                  <button class=${sel(p.dbg)} onClick=${() => p.setDbg(!p.dbg)}>
+                    Debug: ${p.dbg ? "On" : "Off"}
+                  </button>
+                  <button class=${sel(p.ab)} onClick=${() => p.setAb(!p.ab)}>
+                    Alpha-beta: ${p.ab ? "On" : "Off"}
+                  </button>
+                  <label style=${{ margin: 0 }}>Search depth</label>
+                  <select value=${p.depth} onChange=${(e) => p.setDepth(+e.target.value)}>
+                    ${[1, 2, 3, 4, 5, 6, 7, 8].map(
+                      (d) => html`
+                        <option key=${d}>${d}</option>
+                      `,
+                    )}
+                  </select>
+                </div>
+              `
+            }
+          </div>
+        `;
+      }
+
+      // ===== running the game =====
+      function Game({ cfg, depth, setDepth, dev, onBack }) {
+        // this keeps track of the current game and updates the screen
+
+        const { mode, human } = cfg;
+
+        // use the names from setup, or the default names if the inputs were empty
+        const [names, setNames] = useState(() =>
+          mode === 1
+            ? { [human]: cfg.n1 || "You", [opp(human)]: "Computer" }
+            : { [B]: cfg.n1 || "Player 1", [W]: cfg.n2 || "Player 2" },
+        );
+
+        // keep the board, turn, messages and computer settings here
+        const [board, setBoard] = useState(newBoard);
+        const [turn, setTurn] = useState(B);
+        const [note, setNote] = useState("");
+        const [moveNo, setMoveNo] = useState(0);
+        const [busy, setBusy] = useState(false);
+        const [dbg, setDbg] = useState(false);
+        const [ab, setAb] = useState(true);
+        const [info, setInfo] = useState("");
+        const [lines, setLines] = useState("");
+        const prev = useRef(null),
+          opts = useRef({});
+        opts.current = { dbg: dev && dbg, ab, depth }; // read the current settings when the computer starts searching
+        useEffect(() => {
+          prev.current = board;
+        }, [board]); // remember the previous board to see which pieces flipped
+        const done = over(board),
+          auto = mode === 1 && turn !== human,
+          legal = done ? [] : movesFor(board, turn);
+
+        // use the color name if the player name is empty
+        const nameOf = (p) => names[p] || (p === B ? "Black" : "White");
+
+        // put down the piece, then switch turns or pass if there is no move
+        function play(m) {
+          const nb = apply(board, m, turn);
+          let t = opp(turn),
+            n = "";
+          if (!over(nb) && !movesFor(nb, t).length) {
+            n = nameOf(t) + " had no move and passed";
+            t = turn;
+          }
+          setBoard(nb);
+          setTurn(t);
+          setNote(n);
+          setMoveNo((x) => x + 1);
+        }
+
+        // give the thinking message time to show, then search and play the move
+        function think() {
+          if (done || busy) return;
+          setBusy(true);
+          setTimeout(() => {
+            const o = opts.current,
+              t0 = performance.now(),
+              r = bestMove(board, turn, o.depth, o.ab, o.dbg);
+            setInfo(
+              r.states +
+                " (" +
+                Math.round(performance.now() - t0) +
+                " ms, depth " +
+                o.depth +
+                ", alpha-beta " +
+                (o.ab ? "on" : "off") +
+                ")",
+            );
+            setLines(
+              o.dbg
+                ? r.lines.join("\n") +
+                    (r.dropped ? "\n... " + r.dropped + " more lines not shown" : "")
+                : "",
+            );
+            setBusy(false);
+            play(r.move);
+          }, 30);
+        }
+
+        // in one player mode, start the computer turn after a short pause
+        useEffect(() => {
+          if (auto && !done && !busy) {
+            const id = setTimeout(think, 450);
+            return () => clearTimeout(id);
+          }
+        }, [turn, board]);
+
+        // work out what the title should say for this turn or the final result
+        const b = count(board, B),
+          w = count(board, W);
+        const title = busy
+          ? "Thinking..."
+          : done
+            ? b === w
+              ? "It’s a draw!"
+              : nameOf(b > w ? B : W) + " wins by " + Math.abs(b - w) + "!"
+            : turn === B
+              ? "Black’s Turn"
+              : "White’s Turn";
+        return html`
+          <section>
+            <button id="back" title="Back to start" onClick=${onBack}>↶</button>
+            <div id="title">${title}</div>
+            <${Scoreboard} board=${board} names=${names} setNames=${setNames} />
+            <div id="frame">
+              <div class="stack k"></div>
+              <${Board}
+                board=${board}
+                legal=${legal}
+                humanTurn=${!busy && !auto}
+                prev=${prev.current}
+                moveNo=${moveNo}
+                onPlay=${play}
+              />
+              <div class="stack w"></div>
+            </div>
+            <${Controls}
+              dev=${dev}
+              dbg=${dbg}
+              setDbg=${setDbg}
+              ab=${ab}
+              setAb=${setAb}
+              depth=${depth}
+              setDepth=${setDepth}
+              busy=${busy}
+              done=${done}
+              onMove=${think}
+            />
+            <div id="info">
+              ${
+                note
+                  ? html`
+                      <div>${note}</div>
+                    `
+                  : null
+              }${
+                dev && info
+                  ? html`
+                      <div>States examined: ${info}</div>
+                    `
+                  : null
+              }
+            </div>
+            ${
+              dev && dbg && lines
+                ? html`
+                    <pre id="debug">${lines}</pre>
+                  `
+                : null
+            }
+          </section>
+        `;
+      }
+
+      // ===== putting the page together =====
+
+      // these settings stay when I go back to the start screen
+      function App() {
+        // this connects the toolbar, start screen and game together
+
+        const [cfg, setCfg] = useState(null);
+        const [theme, setTheme] = useState(0);
+        const [depth, setDepth] = useState(2);
+        const [dev, setDev] = useState(false);
+
+        // change the CSS colors whenever I pick a different theme
+        useEffect(() => {
+          VARS.forEach((v, i) =>
+            document.documentElement.style.setProperty(v, THEMES[theme][i]),
+          );
+        }, [theme]);
+        return html`
+          <div>
+            <${Rail}
+              theme=${theme}
+              setTheme=${setTheme}
+              depth=${depth}
+              setDepth=${setDepth}
+              dev=${dev}
+              setDev=${setDev}
+            />
+            ${
+              cfg
+                ? html`
+                    <${Game}
+                      cfg=${cfg}
+                      depth=${depth}
+                      setDepth=${setDepth}
+                      dev=${dev}
+                      onBack=${() => setCfg(null)}
+                    />
+                  `
+                : html`
+                    <${Settings} onStart=${setCfg} />
+                  `
+            }
+          </div>
+        `;
+      }
+
+      // start the app inside the root div
+      ReactDOM.createRoot(document.getElementById("root")).render(html`
+        <${App} />
+      `);
+    </script>
+  </body>
+</html>
