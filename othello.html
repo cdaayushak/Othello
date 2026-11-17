@@ -513,6 +513,78 @@ alpha-beta pruning.
           min-width: 180px;
         }
       }
+      /* the ending popup uses the same colors as the board */
+      .game-over {
+        width: min(420px, calc(100vw - 32px));
+        padding: 32px 24px;
+        border: 4px solid var(--line);
+        border-radius: 26px;
+        background: var(--bg);
+        color: var(--text);
+        box-shadow: 0 8px 0 var(--line);
+        text-align: center;
+        overflow: visible;
+      }
+
+      .game-over::backdrop {
+        background: #140d08b3;
+        backdrop-filter: blur(5px);
+      }
+
+      .game-over h2 {
+        margin: 8px 0 12px;
+        font-size: clamp(30px, 7vw, 42px);
+      }
+
+      .game-over p {
+        margin: 12px 0 24px;
+        line-height: 1.6;
+      }
+
+      .final-score {
+        display: flex;
+        justify-content: center;
+        gap: 28px;
+        padding: 18px;
+        background: var(--felt);
+        border-radius: 16px;
+      }
+
+      .final-score strong {
+        display: block;
+        font-size: 28px;
+      }
+
+      /* each small piece falls once, then disappears */
+      .confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .confetti i {
+        position: absolute;
+        top: -24px;
+        left: var(--x);
+        width: 9px;
+        height: 15px;
+        border-radius: 2px;
+        background: var(--confetti-color);
+        animation: celebrate var(--duration) var(--delay) ease-in forwards;
+      }
+
+      @keyframes celebrate {
+        to {
+          transform: translate(var(--drift), 110vh) rotate(720deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .confetti {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -720,7 +792,7 @@ alpha-beta pruning.
       }
 
       // SORTS THE LEGAL MOVES
-      //  ORDER MOVES TO HELP ALPHA-BETA PRUNING. 
+      //  ORDER MOVES TO HELP ALPHA-BETA PRUNING.
       // try the better square scores first, so pruning can skip more later
       function ordered(board, player) {
         const moves = movesFor(board, player);
@@ -1248,6 +1320,86 @@ alpha-beta pruning.
         `;
       }
 
+      // ===== game over popup =====
+      function GameOver({ black, white, mode, human, names, onRestart, onClose }) {
+        // work out who won before showing the final message
+        const dialog = useRef(null);
+        const winner = black === white ? null : black > white ? B : W;
+        const humanWon = mode === 1 && winner === human;
+        const celebrate = humanWon || (mode === 2 && winner !== null);
+
+        let message = "It's a draw!";
+
+        if (humanWon) {
+          message = "You win!";
+        } else if (winner !== null) {
+          const winnerName = names[winner] || (winner === B ? "Black" : "White");
+          message = winnerName + " wins!";
+        }
+
+        // the browser keeps keyboard focus inside the popup while it is open
+        useEffect(() => {
+          dialog.current.showModal();
+        }, []);
+
+        return html`
+          <dialog
+            class="game-over"
+            ref=${dialog}
+            aria-labelledby="result-title"
+            onClose=${onClose}
+          >
+            ${
+              celebrate &&
+              html`
+                <div class="confetti" aria-hidden="true">
+                  ${Array.from(
+                    { length: 70 },
+                    (_, index) => html`
+                      <i
+                        key=${index}
+                        style=${{
+                          "--x": ((index * 37) % 100) + "%",
+                          "--delay": (index % 12) * 0.09 + "s",
+                          "--duration": 2.5 + (index % 5) * 0.3 + "s",
+                          "--drift": (index % 2 ? 1 : -1) * (30 + (index % 90)) + "px",
+                          "--confetti-color": [
+                            "#ff8fbd",
+                            "#d9c6f2",
+                            "#bfdcf5",
+                            "#ffd477",
+                            "#f6e7cf",
+                          ][index % 5],
+                        }}
+                      ></i>
+                    `,
+                  )}
+                </div>
+              `
+            }
+            <div>Game over</div>
+            <h2 id="result-title">${message}</h2>
+            <div class="final-score">
+              <div>
+                Black
+                <strong>${black}</strong>
+              </div>
+              <div>
+                White
+                <strong>${white}</strong>
+              </div>
+            </div>
+            <p>
+              ${humanWon ? "You did it! Ready for another game?" : "Ready to play again?"}
+            </p>
+            <div class="row">
+              <button autofocus onClick=${onRestart}>Play again</button>
+              <button onClick=${onClose}>View board</button>
+            </div>
+          </dialog>
+        `;
+      }
+
       // ===== running the game =====
       function Game({ cfg, depth, setDepth, dev, onBack }) {
         // this keeps track of the current game and updates the screen
@@ -1271,6 +1423,7 @@ alpha-beta pruning.
         const [ab, setAb] = useState(true);
         const [info, setInfo] = useState("");
         const [lines, setLines] = useState("");
+        const [resultClosed, setResultClosed] = useState(false);
         const prev = useRef(null),
           opts = useRef({});
         opts.current = { dbg: dev && dbg, ab, depth }; // read the current settings when the computer starts searching
@@ -1283,6 +1436,19 @@ alpha-beta pruning.
 
         // use the color name if the player name is empty
         const nameOf = (p) => names[p] || (p === B ? "Black" : "White");
+
+        // start a fresh board but keep the names, theme and difficulty I picked
+        function restart() {
+          prev.current = null;
+          setBoard(newBoard());
+          setTurn(B);
+          setNote("");
+          setMoveNo(0);
+          setBusy(false);
+          setInfo("");
+          setLines("");
+          setResultClosed(false);
+        }
 
         // put down the piece, then switch turns or pass if there is no move
         function play(m) {
@@ -1352,6 +1518,21 @@ alpha-beta pruning.
           <section>
             <button id="back" title="Back to start" onClick=${onBack}>↶</button>
             <div id="title">${title}</div>
+            ${
+              done &&
+              !resultClosed &&
+              html`
+                <${GameOver}
+                  black=${b}
+                  white=${w}
+                  mode=${mode}
+                  human=${human}
+                  names=${names}
+                  onRestart=${restart}
+                  onClose=${() => setResultClosed(true)}
+                />
+              `
+            }
             <${Scoreboard} board=${board} names=${names} setNames=${setNames} />
             <div id="frame">
               <div class="stack k"></div>
@@ -1377,6 +1558,12 @@ alpha-beta pruning.
               done=${done}
               onMove=${think}
             />
+            ${
+              done &&
+              html`
+                <div class="row"><button onClick=${restart}>Restart game</button></div>
+              `
+            }
             <div id="info">
               ${
                 note

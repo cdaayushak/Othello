@@ -43,6 +43,8 @@ The toolbar is on the right like in my reference picture. It has five color circ
 - A message for whose turn it is, when someone has to pass, and who wins or if it is a draw.
 - Five themes: brown, lavender, pink, blue and peach. You can change the theme before or during a game.
 - The back arrow takes you to the start screen so you can start a new game.
+- A game over popup that matches the theme and shows the final score. If I beat the computer, it says **You win!** and drops confetti. In two player mode, it celebrates the winning player too.
+- **Play again** starts a fresh board with the same names and settings. **View board** closes the popup so I can see the last board, and there is a **Restart game** button below it. Pressing Escape also closes the popup.
 
 ## How the computer plays
 
