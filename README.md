@@ -54,17 +54,29 @@ The score looks at good board spaces like corners, how many moves each side can 
 
 ## Dev mode tools
 
-When Dev mode is on, the game can show how many positions the computer checked and how long it took. You can also:
+There is a little thinking box beside the board, between the game and the color toolbar. It matches the theme with a light transparent background and a small animated fox drawing. It shows the last move picked, positions checked, search time, depth and alpha-beta setting. These are the real search results. On small screens the box goes below the board so everything still fits.
 
-- Turn Debug on to see search paths, their scores and which branches got pruned. It shows up to 1,500 lines for each search.
+Turn on Dev mode for the extra controls. You can also:
+
+- Turn Debug on to see search paths, their scores and which branches got pruned inside the thinking box. The paths scroll inside their own little area, with up to 1,500 lines for each search.
 - Turn alpha-beta pruning on or off. This helps the computer skip some moves it does not need to check.
 - Change the search depth from 1 to 8. A higher number looks further ahead and can take longer.
 
 If I pick a depth that is not 2, 4 or 6, the Level button says Custom. The extra search information shows after using Make move or after the computer takes a turn.
 
+## Downloading my game trace
+
+The game keeps a history from the start of each new game. After the game ends, click **Download game_trace.txt** in the game over popup. If I close the popup, the same download button is below the board too. The browser downloads the text file normally. It does not save directly into the project folder.
+
+The first lines have the player names and the start date and time. The file includes the game settings, each move in order, flipped pieces, scores, forced passes, computer search stats and the final result. If I change a name or search setting during the game, it records the change too.
+
+Debug stays off by default. To include search paths, heuristic values and pruned branches, turn on **Dev mode**, then **Debug** or **Detailed search**, before the searches I want to record. Each search can keep up to 1,500 debug lines. If any lines are left out, the trace says **SEARCH LOG TRUNCATED** and gives the number omitted. Earlier turns stay in the file when the computer searches again.
+
+This is the history of the game I actually played, not a pre-filled example. Download it before restarting or refreshing because a new game starts a new trace.
+
 ## Things to know
 
-The game stays in the current browser page. Refreshing the page starts it over. High search depths can make the page slow, especially if alpha-beta is off.
+The game stays in the current browser page. Refreshing the page starts it over. The computer searches in a background worker so the page and animation can keep moving. High depths still take longer, especially if alpha-beta is off. Older browsers can use the normal search if workers are unavailable.
 
 ## Files
 

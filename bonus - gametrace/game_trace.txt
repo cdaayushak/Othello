@@ -1,0 +1,1787 @@
+Players: bomi (Black) / Computer (White)
+Started: Mon Nov 16 2026 22:58:37 GMT-0600 (Central Standard Time)
+Started (ISO): 2026-11-17T04:58:37.820Z
+OTHELLO GAME TRACE
+Mode: One-player (human vs computer)
+Human color: Black
+Black player: bomi
+White player: Computer
+Search depth: 2
+Alpha-beta: On
+Debug: Off
+Coordinates: A-H are columns; 1-8 are rows, starting at the top left.
+Opening score: Black 2 - White 2
+Move events are cumulative. Search paths are recorded only when Debug is on for that search.
+
+Settings updated: 2026-11-17T04:58:42.161Z
+Black player: bomi
+White player: Computer
+Search depth: 2
+Alpha-beta: On
+Debug: On
+
+Move 1: bomi (Black) -> D3
+Played: 2026-11-17T04:58:44.726Z
+Move source: Human click
+Discs flipped: 1 [D4]
+Score afterward: Black 4 - White 1
+
+Move 2: Computer (White) -> C5
+Played: 2026-11-17T04:58:45.216Z
+Move source: AI search
+Discs flipped: 1 [D5]
+Score afterward: Black 3 - White 3
+AI chosen move: C5
+States examined: 14
+Search time: 8 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C3 → C4   value = -29
+C3 → F5   value = 19
+C3 → E6   value = 19
+C3 → B3   value = 20
+==> root move C3 has value -29
+E3 → F3   value = 5
+E3 → F4   value = -29
+E3   PRUNED F5, F6, F2
+==> root move E3 has value -29
+C5 → C6   value = -21
+C5 → D6   value = -21
+C5 → E6   value = 3
+C5 → F6   value = 3
+C5 → B6   value = 4
+==> root move C5 has value -21
+End of search log: no search lines omitted by the line limit.
+
+Move 3: bomi (Black) -> D6
+Played: 2026-11-17T04:58:46.913Z
+Move source: Human click
+Discs flipped: 1 [D5]
+Score afterward: Black 5 - White 2
+
+Move 4: Computer (White) -> E3
+Played: 2026-11-17T04:58:47.386Z
+Move source: AI search
+Discs flipped: 2 [D4, E4]
+Score afterward: Black 3 - White 5
+AI chosen move: E3
+States examined: 18
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C3 → C4   value = -61
+C3 → F4   value = 19
+C3 → F5   value = 19
+C3 → E6   value = 19
+C3 → B3   value = 4
+C3 → B4   value = 12
+C3 → B5   value = 12
+==> root move C3 has value -61
+E3 → F3   value = 3
+E3 → F4   value = 25
+E3 → F5   value = 19
+E3 → B4   value = 34
+E3 → B5   value = 34
+==> root move E3 has value 3
+C7 → F5   value = 2
+C7   PRUNED E6, F6, B5, B6, D7
+==> root move C7 has value 2
+E7 → F5   value = 2
+E7   PRUNED E6, F6, B5, B6, D7
+==> root move E7 has value 2
+End of search log: no search lines omitted by the line limit.
+
+Move 5: bomi (Black) -> F3
+Played: 2026-11-17T04:58:50.942Z
+Move source: Human click
+Discs flipped: 2 [E3, E4]
+Score afterward: Black 6 - White 3
+
+Move 6: Computer (White) -> E2
+Played: 2026-11-17T04:58:51.423Z
+Move source: AI search
+Discs flipped: 2 [E3, E4]
+Score afterward: Black 4 - White 6
+AI chosen move: E2
+States examined: 26
+Search time: 6 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F4 → F5   value = 23
+F4 → E6   value = -11
+F4 → G3   value = 54
+F4 → B4   value = 52
+F4 → B5   value = 52
+F4 → G5   value = 44
+F4 → B6   value = 38
+==> root move F4 has value -11
+D2 → C1   value = -7
+D2 → D1   value = -14
+D2   PRUNED C3, C4, F4, F5, E6, C2, B4, B5, B6
+==> root move D2 has value -14
+E2 → F1   value = 31
+E2 → D1   value = 36
+E2 → F4   value = 40
+E2 → F5   value = 34
+E2 → B4   value = 57
+E2 → B5   value = 57
+==> root move E2 has value 31
+F2 → F1   value = -7
+F2   PRUNED C4, F4, F5, E6, E2, B4, B5
+==> root move F2 has value -7
+C7 → C4   value = -22
+C7   PRUNED F5, E6, B5, B6, D7
+==> root move C7 has value -22
+D7 → D8   value = -14
+D7   PRUNED C4, C6, E6, B6
+==> root move D7 has value -14
+E7 → C4   value = -22
+E7   PRUNED F5, E6, B5, B6, D7
+==> root move E7 has value -22
+End of search log: no search lines omitted by the line limit.
+
+Move 7: bomi (Black) -> F4
+Played: 2026-11-17T04:58:53.697Z
+Move source: Human click
+Discs flipped: 1 [E5]
+Score afterward: Black 6 - White 5
+
+Move 8: Computer (White) -> C6
+Played: 2026-11-17T04:58:54.174Z
+Move source: AI search
+Discs flipped: 1 [D5]
+Score afterward: Black 5 - White 7
+AI chosen move: C6
+States examined: 76
+Search time: 9 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C3 → D1   value = 44
+C3 → E1   value = 0
+C3 → C4   value = -22
+C3 → D2   value = 21
+C3 → B3   value = 45
+C3 → B4   value = 25
+C3 → B5   value = 17
+C3 → B2   value = 83
+==> root move C3 has value -22
+C4 → D1   value = 52
+C4 → E1   value = 16
+C4 → C3   value = -4
+C4 → D2   value = -3
+C4 → B3   value = 41
+C4 → B4   value = 15
+C4 → B5   value = 17
+==> root move C4 has value -4
+F5 → F1   value = 29
+F5 → D1   value = 34
+F5 → C4   value = 16
+F5 → C6   value = 0
+F5 → F6   value = 38
+F5 → D2   value = -9
+F5   PRUNED B4, G6
+==> root move F5 has value -9
+C6 → F1   value = 31
+C6 → D1   value = 36
+C6 → E1   value = 24
+C6 → C3   value = 16
+C6 → C4   value = 10
+C6 → F5   value = 8
+C6 → D2   value = 1
+C6 → B4   value = 25
+C6 → B5   value = 11
+C6 → B6   value = 49
+C6 → B7   value = 85
+==> root move C6 has value 1
+E6 → F1   value = 31
+E6 → D1   value = 36
+E6 → C4   value = -30
+E6   PRUNED F5, F6, D2, B4, B5, F7
+==> root move E6 has value -30
+F6 → F1   value = 39
+F6 → D1   value = 44
+F6 → C4   value = -38
+F6   PRUNED F5, D2, B4, B5
+==> root move F6 has value -38
+C2 → D1   value = 43
+C2 → E1   value = 7
+C2 → C3   value = -5
+C2   PRUNED C4, D2, B4, B5
+==> root move C2 has value -5
+D2 → C1   value = 24
+D2 → D1   value = 67
+D2 → E1   value = 7
+D2 → C3   value = 35
+D2 → C4   value = -15
+D2   PRUNED B4, B5
+==> root move D2 has value -15
+G3 → F1   value = 14
+G3 → H3   value = 18
+G3 → E1   value = 7
+G3 → C3   value = -9
+G3   PRUNED C4, F5, D2, F2, B4, B5, H2, G2
+==> root move G3 has value -9
+G4 → F1   value = 28
+G4 → E1   value = -3
+G4   PRUNED C3, F5, G3, B4, B5, G2
+==> root move G4 has value -3
+G5 → F1   value = 62
+G5 → D1   value = 67
+G5 → E1   value = -17
+G5   PRUNED C3, F5, G3, B4, B5
+==> root move G5 has value -17
+D7 → F1   value = 12
+D7 → D1   value = 17
+D7 → E1   value = -3
+D7   PRUNED D8, C3, C4, F5, C6, D2, B5, C7
+==> root move D7 has value -3
+E7 → F1   value = 30
+E7 → D1   value = 35
+E7 → E1   value = -1
+E7   PRUNED C3, C4, F5, D2, B5, C7, D7
+==> root move E7 has value -1
+G2 → H1   value = -24
+G2   PRUNED F1, E1, C3, C4, F5, D2, F2, G3, B4, B5
+==> root move G2 has value -24
+End of search log: no search lines omitted by the line limit.
+
+Move 9: bomi (Black) -> E1
+Played: 2026-11-17T04:58:58.618Z
+Move source: Human click
+Discs flipped: 3 [E2, E3, E4]
+Score afterward: Black 9 - White 4
+
+Move 10: Computer (White) -> F6
+Played: 2026-11-17T04:58:59.083Z
+Move source: AI search
+Discs flipped: 1 [E5]
+Score afterward: Black 8 - White 6
+AI chosen move: F6
+States examined: 35
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F5 → C4   value = 32
+F5 → E6   value = -8
+F5 → F6   value = 32
+F5 → B4   value = 33
+F5 → B6   value = 53
+F5 → G6   value = 33
+F5 → B7   value = 51
+==> root move F5 has value -8
+E6 → C3   value = -8
+E6   PRUNED C4, B5, B6, C7, D7, E7, B7
+==> root move E6 has value -8
+F6 → C4   value = 32
+F6 → E6   value = 0
+F6 → B4   value = 41
+F6 → B6   value = 45
+F6 → B7   value = 59
+==> root move F6 has value 0
+D2 → C1   value = 22
+D2 → D1   value = 9
+D2 → C3   value = 29
+D2 → C4   value = -7
+D2   PRUNED C2, B4, B5, B6, B7
+==> root move D2 has value -7
+F2 → F1   value = 30
+F2 → C3   value = -1
+F2   PRUNED C4, D2, G3, B4, B5, B6, G2, B7
+==> root move F2 has value -1
+G4 → H5   value = 9
+G4 → C3   value = 13
+G4 → F5   value = -1
+G4   PRUNED G3, B4, B5, G5, B6, B7
+==> root move G4 has value -1
+D7 → D8   value = 17
+D7 → C3   value = -1
+D7   PRUNED C4, B5, B6, C7, B7
+==> root move D7 has value -1
+E7 → C3   value = -1
+E7   PRUNED C4, B5, B6, C7, D7, B7
+==> root move E7 has value -1
+G2 → C3   value = -19
+G2   PRUNED C4, F5, F2, G3, B4, G4, B5, B6
+==> root move G2 has value -19
+End of search log: no search lines omitted by the line limit.
+
+Move 11: bomi (Black) -> B4
+Played: 2026-11-17T04:59:02.518Z
+Move source: Human click
+Discs flipped: 1 [C5]
+Score afterward: Black 10 - White 5
+
+Move 12: Computer (White) -> C4
+Played: 2026-11-17T04:59:02.990Z
+Move source: AI search
+Discs flipped: 1 [C5]
+Score afterward: Black 9 - White 7
+AI chosen move: C4
+States examined: 29
+Search time: 8 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C4 → E6   value = 33
+C4 → B5   value = 66
+C4 → B6   value = 54
+C4 → B7   value = 92
+==> root move C4 has value 33
+E6 → C4   value = 1
+E6   PRUNED F5, C7, D7, E7, B7
+==> root move E6 has value 1
+D2 → C1   value = 31
+D2   PRUNED D1, C3, C4, F5, E6, C2, B6, C7, B7
+==> root move D2 has value 31
+F2 → F1   value = 39
+F2 → C4   value = 8
+F2   PRUNED F5, E6, D2, G3, B6, C7, G1, G2, B7
+==> root move F2 has value 8
+G3 → H3   value = 7
+G3   PRUNED C4, F5, E6, G4, G5, B6, C7, H2, B7
+==> root move G3 has value 7
+G4 → H5   value = 18
+G4   PRUNED F5, E6, G3, G5, B6, C7, B7
+==> root move G4 has value 18
+B5 → C4   value = 48
+B5 → E6   value = 24
+B5   PRUNED B6, B7
+==> root move B5 has value 24
+B6 → A6   value = 65
+B6 → C4   value = 40
+B6 → E6   value = 8
+B6   PRUNED A7, B7
+==> root move B6 has value 8
+C7 → C8   value = 33
+C7   PRUNED C4, F5, E6, D7, E7, B8, B7
+==> root move C7 has value 33
+D7 → D8   value = 10
+D7   PRUNED C4, F5, E6, C7, E7, B7
+==> root move D7 has value 10
+G2 → C4   value = -48
+G2   PRUNED F5, E6, F2, G3, G4, B6, C7
+==> root move G2 has value -48
+End of search log: no search lines omitted by the line limit.
+
+Move 13: bomi (Black) -> B5
+Played: 2026-11-17T04:59:06.125Z
+Move source: Human click
+Discs flipped: 1 [C4]
+Score afterward: Black 11 - White 6
+
+Move 14: Computer (White) -> A5
+Played: 2026-11-17T04:59:06.602Z
+Move source: AI search
+Discs flipped: 1 [B5]
+Score afterward: Black 10 - White 8
+AI chosen move: A5
+States examined: 46
+Search time: 6 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+A3 → A4   value = 47
+A3 → F5   value = 23
+A3 → E6   value = 29
+A3 → B3   value = 70
+A3 → B6   value = 64
+A3 → C7   value = 78
+A3 → D7   value = 76
+A3 → B7   value = 102
+==> root move A3 has value 23
+A4 → A3   value = 25
+A4 → A6   value = 33
+A4 → E6   value = 0
+A4   PRUNED B6, B7
+==> root move A4 has value 0
+A5 → A6   value = 53
+A5 → E6   value = 48
+A5 → B6   value = 55
+A5 → C7   value = 73
+A5 → B7   value = 113
+==> root move A5 has value 48
+C3 → F5   value = 22
+C3   PRUNED E6, D2, B3, B6, D7, B7
+==> root move C3 has value 22
+E6 → F5   value = 30
+E6   PRUNED B6, C7, D7, E7, F7, B7
+==> root move E6 has value 30
+D2 → C1   value = 64
+D2 → D1   value = 27
+D2   PRUNED C3, F5, E6, C2, B6, C7, D7, B7
+==> root move D2 has value 27
+F2 → F1   value = 56
+F2 → F5   value = -11
+F2   PRUNED E6, D2, G3, B6, C7, D7, G2, B7
+==> root move F2 has value -11
+B3 → F5   value = 13
+B3   PRUNED E6, B6, D7, B2, B7
+==> root move B3 has value 13
+G3 → H3   value = 32
+G3   PRUNED F5, E6, G4, G5, B6, C7, D7, H2, B7
+==> root move G3 has value 32
+G4 → H4   value = 49
+G4 → H5   value = 43
+G4   PRUNED F5, E6, G3, G5, B6, C7, D7, B7
+==> root move G4 has value 43
+C7 → C8   value = 60
+C7 → F5   value = 13
+C7   PRUNED E6, B6, D7, E7, B8, B7
+==> root move C7 has value 13
+D7 → D8   value = 43
+D7   PRUNED E8, F5, E6, B6, C7, E7, B7
+==> root move D7 has value 43
+E7 → F8   value = 52
+E7 → F5   value = 21
+E7   PRUNED E6, B6, C7, D7, B7
+==> root move E7 has value 21
+G2 → F5   value = -59
+G2   PRUNED E6, F2, G3, G4, B6, C7, D7
+==> root move G2 has value -59
+End of search log: no search lines omitted by the line limit.
+
+Move 15: bomi (Black) -> A6
+Played: 2026-11-17T04:59:09.643Z
+Move source: Human click
+Discs flipped: 1 [B5]
+Score afterward: Black 12 - White 7
+
+Move 16: Computer (White) -> A7
+Played: 2026-11-17T04:59:10.122Z
+Move source: AI search
+Discs flipped: 1 [A6]
+Score afterward: Black 11 - White 9
+AI chosen move: A7
+States examined: 44
+Search time: 8 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+A3 → A4   value = 32
+A3 → F5   value = 34
+A3 → E6   value = 24
+A3 → B3   value = 57
+A3 → B6   value = 59
+A3 → C7   value = 73
+A3 → D7   value = 71
+A3 → B7   value = 97
+==> root move A3 has value 24
+A4 → A3   value = 0
+A4   PRUNED E6, B6, B7
+==> root move A4 has value 0
+C3 → A3   value = 2
+C3   PRUNED A4, F5, E6, B3, B6, D7, B7
+==> root move C3 has value 2
+E6 → A4   value = -13
+E6   PRUNED F5, B6, C7, D7, E7, F7, B7
+==> root move E6 has value -13
+D2 → C1   value = 43
+D2 → D1   value = 14
+D2   PRUNED A4, C3, F5, E6, C2, B6, C7, D7, B7
+==> root move D2 has value 14
+F2 → F1   value = 43
+F2 → A4   value = 2
+F2   PRUNED F5, E6, D2, G3, B6, C7, D7, G2, B7
+==> root move F2 has value 2
+B3 → A4   value = 18
+B3   PRUNED F5, E6, B6, D7, B2, B7
+==> root move B3 has value 18
+G3 → H3   value = 19
+G3   PRUNED A4, F5, E6, G4, G5, B6, C7, D7, H2, B7
+==> root move G3 has value 19
+G4 → A4   value = -8
+G4   PRUNED H4, H5, F5, E6, G3, G5, B6, C7, D7, B7
+==> root move G4 has value -8
+C7 → C8   value = 55
+C7 → A4   value = -22
+C7   PRUNED F5, E6, B6, D7, E7, B8, B7
+==> root move C7 has value -22
+D7 → A4   value = -22
+D7   PRUNED D8, E8, F5, E6, B6, C7, E7, B7
+==> root move D7 has value -22
+E7 → F8   value = 39
+E7 → A4   value = -14
+E7   PRUNED F5, E6, B6, C7, D7, B7
+==> root move E7 has value -14
+A7 → F5   value = 36
+A7 → E6   value = 34
+A7 → B6   value = 69
+A7 → C7   value = 91
+A7 → D7   value = 89
+A7 → B7   value = 123
+==> root move A7 has value 34
+G2 → A4   value = -24
+G2   PRUNED F5, E6, F2, G3, G4, B6, C7, D7
+==> root move G2 has value -24
+End of search log: no search lines omitted by the line limit.
+
+Move 17: bomi (Black) -> C7
+Played: 2026-11-17T04:59:12.368Z
+Move source: Human click
+Discs flipped: 2 [C6, C5]
+Score afterward: Black 14 - White 7
+
+Move 18: Computer (White) -> B6
+Played: 2026-11-17T04:59:12.839Z
+Move source: AI search
+Discs flipped: 1 [C5]
+Score afterward: Black 13 - White 9
+AI chosen move: B6
+States examined: 48
+Search time: 9 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → D1   value = 48
+F1 → A4   value = 40
+F1 → C3   value = 54
+F1 → F5   value = 30
+F1 → E6   value = 44
+F1 → C2   value = 61
+F1 → D2   value = 17
+F1 → B6   value = 63
+F1 → G1   value = 41
+==> root move F1 has value 17
+A4 → A3   value = 68
+A4 → C3   value = 69
+A4 → F5   value = 47
+A4 → E6   value = 61
+A4 → B3   value = 96
+==> root move A4 has value 47
+C3 → A3   value = 56
+C3 → A4   value = 53
+C3 → F5   value = 27
+C3   PRUNED E6, C2, B3
+==> root move C3 has value 27
+D2 → C1   value = 73
+D2 → D1   value = 12
+D2   PRUNED C3, F5, E6, C2
+==> root move D2 has value 12
+F2 → F1   value = 73
+F2 → F5   value = 20
+F2   PRUNED E6, D2, G3, G1, G2
+==> root move F2 has value 20
+B3 → C3   value = 50
+B3 → F5   value = 52
+B3 → E6   value = 66
+B3 → B2   value = 141
+==> root move B3 has value 50
+G3 → H3   value = 57
+G3 → F5   value = 46
+G3   PRUNED E6, G4, G5, H2
+==> root move G3 has value 46
+G4 → H4   value = 50
+G4   PRUNED H5, F5, E6, G3, G5
+==> root move G4 has value 50
+B6 → F5   value = 62
+B6 → E6   value = 76
+B6 → B7   value = 173
+==> root move B6 has value 62
+D7 → D8   value = 12
+D7   PRUNED E8, F5, E6, E7
+==> root move D7 has value 12
+B8 → C8   value = 35
+B8   PRUNED F5, E6, D7, E7
+==> root move B8 has value 35
+G2 → H1   value = 19
+G2   PRUNED F5, E6, F2, G3, G4
+==> root move G2 has value 19
+B7 → A8   value = 19
+B7   PRUNED F5, E6, B6, D7
+==> root move B7 has value 19
+End of search log: no search lines omitted by the line limit.
+
+Move 19: bomi (Black) -> F5
+Played: 2026-11-17T04:59:15.656Z
+Move source: Human click
+Discs flipped: 3 [E5, D5, C5]
+Score afterward: Black 17 - White 6
+
+Move 20: Computer (White) -> A4
+Played: 2026-11-17T04:59:16.134Z
+Move source: AI search
+Discs flipped: 2 [B4, C4]
+Score afterward: Black 15 - White 9
+AI chosen move: A4
+States examined: 42
+Search time: 6 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → D1   value = 35
+F1 → A4   value = 27
+F1 → C3   value = 43
+F1 → C2   value = 40
+F1 → D2   value = 34
+F1 → B3   value = 32
+F1 → F7   value = 56
+F1 → G1   value = 28
+F1 → B7   value = 94
+F1 → G7   value = 104
+==> root move F1 has value 27
+A4 → A3   value = 47
+A4 → C3   value = 50
+A4 → B3   value = 69
+A4 → F7   value = 65
+A4 → B7   value = 107
+A4 → G7   value = 113
+==> root move A4 has value 47
+D8 → C8   value = 49
+D8 → C3   value = 42
+D8   PRUNED F7, B8, B7, G7
+==> root move D8 has value 42
+C3 → A3   value = 35
+C3   PRUNED A4, C2, B3, F7, B2, B7, G7
+==> root move C3 has value 35
+E6 → C3   value = 84
+E6 → D7   value = 41
+E6   PRUNED E7, F7, B7, G7
+==> root move E6 has value 41
+D2 → C1   value = 60
+D2 → D1   value = 37
+D2   PRUNED C3, C2, F7, B7, G7
+==> root move D2 has value 37
+F2 → C3   value = 23
+F2   PRUNED G3, G4, G5, G6, G1, G2, B7, G7
+==> root move F2 has value 23
+B3 → A3   value = 14
+B3   PRUNED A4, C3, F7, A2, G7
+==> root move B3 has value 14
+G4 → H3   value = 74
+G4 → H4   value = 37
+G4   PRUNED H5, C3, G3, G5, F7, B7, G7
+==> root move G4 has value 37
+G5 → H6   value = 98
+G5 → A4   value = 71
+G5 → E6   value = 29
+G5   PRUNED G6, F7, B7
+==> root move G5 has value 29
+D7 → D8   value = 29
+D7   PRUNED E8, C3, E6, E7, F7, B7, G7
+==> root move D7 has value 29
+End of search log: no search lines omitted by the line limit.
+
+Move 21: bomi (Black) -> C3
+Played: 2026-11-17T04:59:18.003Z
+Move source: Human click
+Discs flipped: 2 [C4, D4]
+Score afterward: Black 18 - White 7
+
+Move 22: Computer (White) -> D7
+Played: 2026-11-17T04:59:18.487Z
+Move source: AI search
+Discs flipped: 2 [C6, B5]
+Score afterward: Black 16 - White 10
+AI chosen move: D7
+States examined: 43
+Search time: 9 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → A3   value = 50
+F1 → D1   value = 71
+F1 → C2   value = 60
+F1 → D2   value = 44
+F1 → B3   value = 60
+F1 → F7   value = 76
+F1 → G1   value = 64
+F1 → G7   value = 124
+==> root move F1 has value 44
+D8 → A3   value = 53
+D8 → C8   value = 37
+D8   PRUNED B3, F7, B8, B7, G7
+==> root move D8 has value 37
+E6 → A3   value = 63
+E6 → B3   value = 83
+E6 → D7   value = 37
+E6   PRUNED E7, F7, B7, G7
+==> root move E6 has value 37
+D2 → C1   value = 24
+D2   PRUNED A3, D1, C2, B3, F7, B2, B7, G7
+==> root move D2 has value 24
+F2 → A3   value = 16
+F2   PRUNED B3, G3, G4, G5, G6, G2, B7, G7
+==> root move F2 has value 16
+G4 → A3   value = 50
+G4 → H3   value = 66
+G4 → H5   value = 71
+G4 → B3   value = 56
+G4 → G3   value = 52
+G4 → G5   value = 52
+G4 → F7   value = 92
+G4 → B7   value = 118
+G4 → G7   value = 140
+==> root move G4 has value 50
+G5 → A3   value = 48
+G5   PRUNED H6, E6, G6, F7, G7
+==> root move G5 has value 48
+D7 → A3   value = 60
+D7 → D8   value = 65
+D7 → E7   value = 72
+D7 → F7   value = 70
+D7 → B7   value = 86
+D7 → G7   value = 118
+==> root move D7 has value 60
+E7 → E6   value = 23
+E7   PRUNED B3, D7, F7, B7, G7
+==> root move E7 has value 23
+B2 → A3   value = -12
+B2   PRUNED E6, C2, B3, F7, B7
+==> root move B2 has value -12
+End of search log: no search lines omitted by the line limit.
+
+Move 23: bomi (Black) -> B7
+Played: 2026-11-17T04:59:21.124Z
+Move source: Human click
+Discs flipped: 1 [C6]
+Score afterward: Black 18 - White 9
+
+Move 24: Computer (White) -> E6
+Played: 2026-11-17T04:59:21.605Z
+Move source: AI search
+Discs flipped: 2 [D6, C6]
+Score afterward: Black 16 - White 12
+AI chosen move: E6
+States examined: 39
+Search time: 7 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → A3   value = 82
+F1 → D1   value = 95
+F1 → D8   value = 111
+F1 → E8   value = 111
+F1 → C2   value = 84
+F1 → D2   value = 68
+F1 → B3   value = 104
+F1 → E7   value = 126
+F1 → F7   value = 100
+F1 → G1   value = 88
+F1 → G7   value = 148
+==> root move F1 has value 68
+C8 → A8   value = -4
+C8   PRUNED A3, D8, E8, E7, F7, G7
+==> root move C8 has value -4
+D8 → A3   value = 97
+D8 → C8   value = 65
+D8   PRUNED E8, B3, E7, F7, B8, G7
+==> root move D8 has value 65
+E6 → A3   value = 115
+E6 → C8   value = 109
+E6 → D8   value = 114
+E6 → B3   value = 127
+E6 → E7   value = 131
+E6 → F7   value = 119
+E6 → G7   value = 165
+==> root move E6 has value 109
+D2 → C1   value = 60
+D2   PRUNED A3, E8, E6, C2, B3, E7, F7, B2, G7
+==> root move D2 has value 60
+F2 → A3   value = 44
+F2   PRUNED D8, E8, B3, G3, G4, G5, G6, E7, G2, G7
+==> root move F2 has value 44
+G4 → A3   value = 70
+G4   PRUNED H3, H5, D8, E8, B3, G3, G5, E7, F7, G7
+==> root move G4 has value 70
+G5 → A3   value = 80
+G5   PRUNED H6, D8, E8, E6, B3, G6, E7, F7, G7
+==> root move G5 has value 80
+E7 → D8   value = 89
+E7   PRUNED E8, E6, B3, F7, G7
+==> root move E7 has value 89
+B8 → A8   value = -42
+B8   PRUNED A3, D8, E8, E7, F7, G7
+==> root move B8 has value -42
+B2 → A3   value = 8
+B2   PRUNED D8, E8, E6, C2, B3, E7, F7
+==> root move B2 has value 8
+End of search log: no search lines omitted by the line limit.
+
+Move 25: bomi (Black) -> E7
+Played: 2026-11-17T04:59:23.533Z
+Move source: Human click
+Discs flipped: 3 [D6, E6, D7]
+Score afterward: Black 20 - White 9
+
+Move 26: Computer (White) -> A8
+Played: 2026-11-17T04:59:24.005Z
+Move source: AI search
+Discs flipped: 1 [B7]
+Score afterward: Black 19 - White 11
+AI chosen move: A8
+States examined: 34
+Search time: 6 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+A8 → A3   value = 125
+A8 → G5   value = 159
+A8 → G6   value = 159
+A8 → F7   value = 159
+A8 → G7   value = 207
+==> root move A8 has value 125
+F1 → A3   value = 119
+F1   PRUNED D1, C2, D2, B3, G5, G6, F7, G1, G7
+==> root move F1 has value 119
+C8 → A8   value = 15
+C8   PRUNED A3, G5, G6, F7, B8, G7
+==> root move C8 has value 15
+F8 → E8   value = 116
+F8   PRUNED B3, G6, F7, G7
+==> root move F8 has value 116
+D8 → A3   value = 106
+D8   PRUNED C8, F8, E8, B3, G6, F7, B8, G7
+==> root move D8 has value 106
+E8 → A3   value = 118
+E8   PRUNED C8, D8, B3, G5, G6, F7, G7
+==> root move E8 has value 118
+C2 → C1   value = 101
+C2   PRUNED A3, B3, G5, G6, F7, B1, B2, G7
+==> root move C2 has value 101
+D2 → C1   value = 89
+D2   PRUNED A3, D1, C2, B3, G5, G6, F7, B2, G7
+==> root move D2 has value 89
+F2 → A3   value = 81
+F2   PRUNED B3, G3, G4, G5, G6, G2, G7
+==> root move F2 has value 81
+G4 → A3   value = 99
+G4   PRUNED H3, H5, B3, G3, G5, G6, F7, G7
+==> root move G4 has value 99
+G5 → A3   value = 109
+G5   PRUNED H6, H4, B3, G4, G6, F7, G7
+==> root move G5 has value 109
+F7 → A8   value = -45
+F7   PRUNED A3, C8, F8, D8, E8, G6, B8, G8, G7
+==> root move F7 has value -45
+B8 → A8   value = -19
+B8   PRUNED A3, G5, G6, F7, G7
+==> root move B8 has value -19
+B2 → A3   value = 53
+B2   PRUNED C2, B3, G5, G6, F7
+==> root move B2 has value 53
+G2 → H1   value = 59
+G2   PRUNED A3, F2, B3, G3, G4, G5, G6, F7, G7
+==> root move G2 has value 59
+End of search log: no search lines omitted by the line limit.
+
+Move 27: bomi (Black) -> G5
+Played: 2026-11-17T04:59:26.755Z
+Move source: Human click
+Discs flipped: 1 [F6]
+Score afterward: Black 21 - White 10
+
+Move 28: Computer (White) -> C8
+Played: 2026-11-17T04:59:27.241Z
+Move source: AI search
+Discs flipped: 1 [C7]
+Score afterward: Black 20 - White 12
+AI chosen move: C8
+States examined: 35
+Search time: 8 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → A3   value = 131
+F1 → D1   value = 144
+F1 → C2   value = 141
+F1 → D2   value = 125
+F1 → B3   value = 149
+F1 → G1   value = 137
+==> root move F1 has value 125
+C8 → A3   value = 159
+C8 → B8   value = 165
+==> root move C8 has value 159
+F8 → D8   value = 160
+F8 → E8   value = 152
+F8   PRUNED F7
+==> root move F8 has value 152
+H5 → A3   value = 148
+H5   PRUNED H6, H4, G4, G6
+==> root move H5 has value 148
+D8 → A3   value = 154
+D8   PRUNED C8, B8
+==> root move D8 has value 154
+E8 → A3   value = 138
+E8   PRUNED C8, D8
+==> root move E8 has value 138
+C2 → C1   value = 137
+C2   PRUNED A3, B3, B1, B2
+==> root move C2 has value 137
+D2 → C1   value = 125
+D2   PRUNED A3, D1, C2, B3, B2
+==> root move D2 has value 125
+F2 → F1   value = 169
+F2 → A3   value = 139
+F2   PRUNED D2, G3, G2
+==> root move F2 has value 139
+G4 → A3   value = 143
+G4   PRUNED H3, H5, B3, G3
+==> root move G4 has value 143
+G6 → A3   value = 161
+G6 → F7   value = 133
+G6   PRUNED H7, G7
+==> root move G6 has value 133
+F7 → A3   value = 91
+F7   PRUNED C8, F8, D8, E8, B8, G8
+==> root move F7 has value 91
+G2 → A3   value = 81
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 81
+End of search log: no search lines omitted by the line limit.
+
+Move 29: bomi (Black) -> A3
+Played: 2026-11-17T04:59:29.551Z
+Move source: Human click
+Discs flipped: 1 [B4]
+Score afterward: Black 22 - White 11
+
+Move 30: Computer (White) -> A2
+Played: 2026-11-17T04:59:30.025Z
+Move source: AI search
+Discs flipped: 1 [A3]
+Score afterward: Black 21 - White 13
+AI chosen move: A2
+States examined: 38
+Search time: 8 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → D1   value = 136
+F1 → C2   value = 141
+F1 → D2   value = 125
+F1 → B3   value = 141
+F1 → G1   value = 129
+F1 → B8   value = 261
+==> root move F1 has value 125
+H5 → H6   value = 154
+H5 → H4   value = 159
+H5 → G4   value = 172
+H5 → G6   value = 156
+H5 → B8   value = 276
+==> root move H5 has value 154
+E8 → D8   value = 143
+E8   PRUNED B8
+==> root move E8 has value 143
+C2 → D2   value = 115
+C2   PRUNED B3, B1, B8, B2
+==> root move C2 has value 115
+D2 → C1   value = 113
+D2   PRUNED D1, C2, B3, B8, B2
+==> root move D2 has value 113
+F2 → F1   value = 169
+F2 → D2   value = 147
+F2   PRUNED G3, B8, G2
+==> root move F2 has value 147
+B3 → A2   value = 185
+B3 → B8   value = 169
+==> root move B3 has value 169
+G3 → H3   value = 177
+G3 → G4   value = 163
+G3   PRUNED B8
+==> root move G3 has value 163
+G4 → H5   value = 112
+G4   PRUNED D8, B3, G3, G6, F7, B8
+==> root move G4 has value 112
+G6 → F7   value = 133
+G6   PRUNED H7, B8, G7
+==> root move G6 has value 133
+F7 → F8   value = 131
+F7   PRUNED D8, E8, B8, G8
+==> root move F7 has value 131
+A2 → B8   value = 283
+==> root move A2 has value 283
+G2 → F2   value = 91
+G2   PRUNED G3, G4, B8
+==> root move G2 has value 91
+End of search log: no search lines omitted by the line limit.
+
+Move 31: bomi (Black) -> B8
+Played: 2026-11-17T04:59:31.801Z
+Move source: Human click
+Discs flipped: 4 [B7, B6, B5, C7]
+Score afterward: Black 26 - White 9
+
+Move 32: Computer (White) -> D8
+Played: 2026-11-17T04:59:32.270Z
+Move source: AI search
+Discs flipped: 2 [C7, B6]
+Score afterward: Black 24 - White 12
+AI chosen move: D8
+States examined: 37
+Search time: 6 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → D1   value = 264
+F1 → D8   value = 232
+F1 → C2   value = 269
+F1 → D2   value = 253
+F1 → B3   value = 269
+F1 → G1   value = 257
+==> root move F1 has value 232
+F8 → D8   value = 252
+F8 → E8   value = 256
+F8 → B3   value = 279
+F8 → F7   value = 279
+==> root move F8 has value 252
+H5 → H6   value = 274
+H5 → H4   value = 279
+H5 → D8   value = 239
+H5   PRUNED G4, G6
+==> root move H5 has value 239
+D8 → E8   value = 253
+==> root move D8 has value 253
+E8 → D8   value = 247
+==> root move E8 has value 247
+C2 → C1   value = 269
+C2 → D8   value = 210
+C2   PRUNED D2, B3, B1, B2
+==> root move C2 has value 210
+D2 → C1   value = 245
+D2   PRUNED D1, D8, C2, B3, B2
+==> root move D2 has value 245
+F2 → F1   value = 289
+F2 → D8   value = 246
+F2   PRUNED D2, G3, G2
+==> root move F2 has value 246
+G4 → H5   value = 244
+G4   PRUNED D8, E8, B3, G3, G6, F7
+==> root move G4 has value 244
+G6 → H6   value = 269
+G6 → D8   value = 242
+G6   PRUNED F7, H7, G7
+==> root move G6 has value 242
+F7 → F8   value = 151
+F7   PRUNED D8, E8, G8
+==> root move F7 has value 151
+G2 → H1   value = 227
+G2   PRUNED D8, F2, G3, G4
+==> root move G2 has value 227
+End of search log: no search lines omitted by the line limit.
+
+Move 33: bomi (Black) -> E8
+Played: 2026-11-17T04:59:34.098Z
+Move source: Human click
+Discs flipped: 2 [D8, C8]
+Score afterward: Black 27 - White 10
+
+Move 34: Computer (White) -> B3
+Played: 2026-11-17T04:59:34.566Z
+Move source: AI search
+Discs flipped: 2 [B4, B5]
+Score afterward: Black 25 - White 13
+AI chosen move: B3
+States examined: 30
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+F1 → D1   value = 218
+F1 → C2   value = 231
+F1 → D2   value = 215
+F1 → B3   value = 223
+F1 → G1   value = 211
+==> root move F1 has value 211
+F8 → B3   value = 249
+F8 → F7   value = 241
+==> root move F8 has value 241
+H5 → H6   value = 228
+H5   PRUNED H4, G4, G6
+==> root move H5 has value 228
+C2 → C1   value = 235
+C2   PRUNED D2, B3, B1, B2
+==> root move C2 has value 235
+D2 → C1   value = 199
+D2   PRUNED D1, C2, B3, B2
+==> root move D2 has value 199
+F2 → F1   value = 247
+F2 → D2   value = 225
+F2   PRUNED G3, G2
+==> root move F2 has value 225
+B3 → B2   value = 309
+==> root move B3 has value 309
+G3 → H3   value = 247
+G3   PRUNED G4, H2
+==> root move G3 has value 247
+G4 → H3   value = 225
+G4   PRUNED H5, B3, G3
+==> root move G4 has value 225
+G6 → F7   value = 211
+G6   PRUNED H7, G7
+==> root move G6 has value 211
+F7 → F8   value = 241
+F7   PRUNED G6, G8, G7
+==> root move F7 has value 241
+G2 → H1   value = 197
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 197
+End of search log: no search lines omitted by the line limit.
+
+Move 35: bomi (Black) -> B2
+Played: 2026-11-17T04:59:36.123Z
+Move source: Human click
+Discs flipped: 4 [B3, B4, B5, B6]
+Score afterward: Black 30 - White 9
+
+Move 36: Computer (White) -> F8
+Played: 2026-11-17T04:59:36.599Z
+Move source: AI search
+Discs flipped: 8 [E7, D6, C5, B4, E8, D8, C8, B8]
+Score afterward: Black 22 - White 18
+AI chosen move: F8
+States examined: 28
+Search time: 4 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C1 → A1   value = 211
+C1 → B1   value = 331
+==> root move C1 has value 211
+F1 → D1   value = 282
+F1 → C2   value = 295
+F1 → D2   value = 287
+F1 → G1   value = 283
+==> root move F1 has value 282
+F8 → F7   value = 329
+==> root move F8 has value 329
+H5 → H6   value = 292
+H5   PRUNED H4, G4, G6
+==> root move H5 has value 292
+C2 → A1   value = 175
+C2   PRUNED C1, D2, B1
+==> root move C2 has value 175
+D2 → C1   value = 295
+D2   PRUNED D1, C2
+==> root move D2 has value 295
+F2 → F1   value = 307
+F2   PRUNED D2, G3, G2
+==> root move F2 has value 307
+G3 → C2   value = 247
+G3   PRUNED D2, F2, G4, H2, G2
+==> root move G3 has value 247
+G4 → H3   value = 313
+G4   PRUNED H5, G3
+==> root move G4 has value 313
+G6 → H6   value = 295
+G6   PRUNED F7, H7, G7
+==> root move G6 has value 295
+F7 → F8   value = 295
+F7   PRUNED G6, G7
+==> root move F7 has value 295
+G2 → H1   value = 253
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 253
+End of search log: no search lines omitted by the line limit.
+
+Move 37: bomi (Black) -> F7
+Played: 2026-11-17T04:59:39.201Z
+Move source: Human click
+Discs flipped: 1 [E7]
+Score afterward: Black 24 - White 17
+
+Move 38: Computer (White) -> G8
+Played: 2026-11-17T04:59:39.667Z
+Move source: AI search
+Discs flipped: 5 [F7, E6, D5, C4, B3]
+Score afterward: Black 19 - White 23
+AI chosen move: G8
+States examined: 40
+Search time: 4 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C1 → A1   value = 231
+C1 → B1   value = 343
+==> root move C1 has value 231
+F1 → D1   value = 294
+F1 → C2   value = 307
+F1 → D2   value = 299
+F1 → G1   value = 295
+==> root move F1 has value 294
+H4 → H6   value = 302
+H4 → H5   value = 299
+H4 → G6   value = 296
+H4 → G7   value = 352
+==> root move H4 has value 296
+H5 → H6   value = 302
+H5 → H4   value = 299
+H5 → G4   value = 312
+H5 → G6   value = 296
+==> root move H5 has value 296
+C2 → A1   value = 189
+C2   PRUNED B1
+==> root move C2 has value 189
+D2 → C1   value = 305
+D2 → D1   value = 318
+D2 → C2   value = 329
+==> root move D2 has value 305
+F2 → D2   value = 221
+F2   PRUNED G3, G4, G6, G1, G8, G2, G7
+==> root move F2 has value 221
+G3 → C2   value = 269
+G3   PRUNED D2, F2, G4, G2
+==> root move G3 has value 269
+G4 → H5   value = 302
+G4   PRUNED G3, G6
+==> root move G4 has value 302
+G6 → H6   value = 281
+G6   PRUNED H7, G8, G7
+==> root move G6 has value 281
+B1 → A1   value = 189
+==> root move B1 has value 189
+G8 → G7   value = 349
+==> root move G8 has value 349
+G2 → H1   value = 273
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 273
+G7 → H8   value = 259
+G7   PRUNED H7, G8
+==> root move G7 has value 259
+End of search log: no search lines omitted by the line limit.
+
+Move 39: bomi (Black) -> G7
+Played: 2026-11-17T04:59:41.091Z
+Move source: Human click
+Discs flipped: 1 [F7]
+Score afterward: Black 21 - White 22
+
+Move 40: Computer (White) -> D2
+Played: 2026-11-17T04:59:41.566Z
+Move source: AI search
+Discs flipped: 3 [C3, D3, D4]
+Score afterward: Black 18 - White 26
+AI chosen move: D2
+States examined: 37
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C1 → A1   value = 251
+C1 → B1   value = 371
+==> root move C1 has value 251
+F1 → D1   value = 320
+F1 → C2   value = 333
+F1 → D2   value = 325
+F1 → G1   value = 321
+==> root move F1 has value 320
+H6 → H8   value = 251
+H6   PRUNED H7
+==> root move H6 has value 251
+H4 → H6   value = 330
+H4 → H5   value = 327
+H4 → G6   value = 314
+==> root move H4 has value 314
+H5 → H6   value = 316
+H5   PRUNED H4, G4, G6
+==> root move H5 has value 316
+C2 → A1   value = 215
+C2   PRUNED B1
+==> root move C2 has value 215
+D2 → C1   value = 335
+D2 → D1   value = 356
+D2 → C2   value = 357
+==> root move D2 has value 335
+F2 → D2   value = 289
+F2   PRUNED G3, G4, G6, G1, G2
+==> root move F2 has value 289
+G3 → C2   value = 291
+G3   PRUNED D2, F2, G4, G2
+==> root move G3 has value 291
+G4 → H3   value = 337
+G4 → H5   value = 330
+G4   PRUNED G3, G6
+==> root move G4 has value 330
+G6 → H8   value = 219
+G6   PRUNED H6, H7
+==> root move G6 has value 219
+B1 → A1   value = 213
+==> root move B1 has value 213
+H7 → H8   value = 201
+==> root move H7 has value 201
+G2 → H1   value = 295
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 295
+End of search log: no search lines omitted by the line limit.
+
+Move 41: bomi (Black) -> D1
+Played: 2026-11-17T04:59:43.928Z
+Move source: Human click
+Discs flipped: 5 [D2, D3, D4, D5, D6]
+Score afterward: Black 24 - White 21
+
+Move 42: Computer (White) -> A1
+Played: 2026-11-17T04:59:44.402Z
+Move source: AI search
+Discs flipped: 1 [B2]
+Score afterward: Black 23 - White 23
+AI chosen move: A1
+States examined: 30
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+A1 → B1   value = 468
+==> root move A1 has value 468
+H8 → G6   value = 324
+H8   PRUNED H7
+==> root move H8 has value 324
+C1 → A1   value = 236
+C1   PRUNED B1
+==> root move C1 has value 236
+F1 → C2   value = 332
+F1   PRUNED F2, G1
+==> root move F1 has value 332
+H6 → H8   value = 250
+H6   PRUNED H7
+==> root move H6 has value 250
+H4 → H6   value = 321
+H4   PRUNED H5, G6
+==> root move H4 has value 321
+H5 → H6   value = 305
+H5   PRUNED H4, G4, G6
+==> root move H5 has value 305
+C2 → A1   value = 216
+C2   PRUNED B1
+==> root move C2 has value 216
+F2 → G3   value = 342
+F2   PRUNED G4, G6, G1, G2
+==> root move F2 has value 342
+G3 → C2   value = 290
+G3   PRUNED F2, G4, G2
+==> root move G3 has value 290
+G4 → H3   value = 328
+G4   PRUNED H5, G3, G6
+==> root move G4 has value 328
+G6 → H8   value = 218
+G6   PRUNED H6, H7
+==> root move G6 has value 218
+B1 → A1   value = 206
+==> root move B1 has value 206
+H7 → H8   value = 200
+==> root move H7 has value 200
+G2 → H1   value = 292
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 292
+End of search log: no search lines omitted by the line limit.
+
+Move 43: bomi (Black) -> B1
+Played: 2026-11-17T04:59:46.299Z
+Move source: Human click
+Discs flipped: 3 [B2, B3, B4]
+Score afterward: Black 27 - White 20
+
+Move 44: Computer (White) -> F1
+Played: 2026-11-17T04:59:46.766Z
+Move source: AI search
+Discs flipped: 2 [E2, D3]
+Score afterward: Black 25 - White 23
+AI chosen move: F1
+States examined: 31
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H8 → G6   value = 427
+H8 → H7   value = 555
+==> root move H8 has value 427
+C1 → pass   value = 330
+==> root move C1 has value 330
+F1 → C2   value = 429
+F1 → F2   value = 439
+F1 → G1   value = 433
+==> root move F1 has value 429
+H6 → H8   value = 341
+H6   PRUNED H7
+==> root move H6 has value 341
+H4 → H6   value = 424
+H4   PRUNED H5, G6
+==> root move H4 has value 424
+H5 → H6   value = 414
+H5   PRUNED H4, G4, G6
+==> root move H5 has value 414
+C2 → pass   value = 354
+==> root move C2 has value 354
+F2 → G3   value = 451
+F2 → G4   value = 409
+F2   PRUNED G6, G1, G2
+==> root move F2 has value 409
+G3 → H3   value = 433
+G3 → C2   value = 411
+G3   PRUNED F2, G4, G2
+==> root move G3 has value 411
+G4 → H3   value = 425
+G4   PRUNED H4, H5, G3, G6
+==> root move G4 has value 425
+G6 → H8   value = 315
+G6   PRUNED H6, H7
+==> root move G6 has value 315
+H7 → H8   value = 309
+==> root move H7 has value 309
+G2 → H1   value = 371
+G2   PRUNED F2, G3, G4
+==> root move G2 has value 371
+End of search log: no search lines omitted by the line limit.
+
+Move 45: bomi (Black) -> F2
+Played: 2026-11-17T04:59:49.568Z
+Move source: Human click
+Discs flipped: 1 [E2]
+Score afterward: Black 27 - White 22
+
+Move 46: Computer (White) -> G4
+Played: 2026-11-17T04:59:50.037Z
+Move source: AI search
+Discs flipped: 4 [F4, E4, D4, F5]
+Score afterward: Black 23 - White 27
+AI chosen move: G4
+States examined: 36
+Search time: 6 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H8 → C2   value = 415
+H8 → G6   value = 427
+H8 → G1   value = 411
+H8 → H7   value = 547
+==> root move H8 has value 411
+C1 → C2   value = 351
+==> root move C1 has value 351
+H6 → H8   value = 333
+H6   PRUNED C2, G1, H7
+==> root move H6 has value 333
+H4 → H6   value = 416
+H4 → H5   value = 413
+H4 → C2   value = 410
+H4   PRUNED G6, G1
+==> root move H4 has value 410
+H5 → H6   value = 406
+H5   PRUNED H4, C2, G4, G6, G1
+==> root move H5 has value 406
+C2 → G1   value = 339
+==> root move C2 has value 339
+G3 → H3   value = 429
+G3 → H4   value = 426
+G3 → C2   value = 415
+G3 → G4   value = 411
+G3   PRUNED G1, G2
+==> root move G3 has value 411
+G4 → H3   value = 417
+G4 → H4   value = 414
+G4 → H5   value = 438
+G4 → G3   value = 457
+G4 → G1   value = 415
+==> root move G4 has value 414
+G6 → H8   value = 323
+G6   PRUNED H6, G4, G1, H7
+==> root move G6 has value 323
+G1 → H1   value = 321
+G1   PRUNED C2, G3, G2
+==> root move G1 has value 321
+H7 → H8   value = 301
+H7   PRUNED C2, G1
+==> root move H7 has value 301
+G2 → H1   value = 379
+G2   PRUNED C2, G3, G4, G1, H2
+==> root move G2 has value 379
+End of search log: no search lines omitted by the line limit.
+
+Move 47: bomi (Black) -> G3
+Played: 2026-11-17T04:59:52.187Z
+Move source: Human click
+Discs flipped: 2 [F4, G4]
+Score afterward: Black 26 - White 25
+
+Move 48: Computer (White) -> H5
+Played: 2026-11-17T04:59:52.665Z
+Move source: AI search
+Discs flipped: 1 [G5]
+Score afterward: Black 25 - White 27
+AI chosen move: H5
+States examined: 30
+Search time: 4 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H8 → G6   value = 433
+H8 → G1   value = 425
+H8 → H7   value = 561
+==> root move H8 has value 425
+C1 → pass   value = 374
+==> root move C1 has value 374
+H3 → H4   value = 430
+H3 → H5   value = 420
+H3   PRUNED G1, H2, G2
+==> root move H3 has value 420
+H6 → H8   value = 351
+H6   PRUNED G1, H7
+==> root move H6 has value 351
+H4 → H3   value = 400
+H4   PRUNED H6, H5, G6, G1
+==> root move H4 has value 400
+H5 → H6   value = 428
+H5 → H4   value = 433
+H5 → G6   value = 440
+H5 → G1   value = 426
+==> root move H5 has value 426
+C2 → G6   value = 335
+C2   PRUNED G1
+==> root move C2 has value 335
+G6 → H8   value = 333
+G6   PRUNED H6, G1, H7
+==> root move G6 has value 333
+G1 → H1   value = 343
+G1   PRUNED G2
+==> root move G1 has value 343
+H2 → H3   value = 415
+H2   PRUNED H4, G1, G2
+==> root move H2 has value 415
+H7 → H8   value = 319
+H7   PRUNED G1
+==> root move H7 has value 319
+G2 → H1   value = 373
+G2   PRUNED G1, H2
+==> root move G2 has value 373
+End of search log: no search lines omitted by the line limit.
+
+Move 49: bomi (Black) -> G6
+Played: 2026-11-17T04:59:54.851Z
+Move source: Human click
+Discs flipped: 1 [G5]
+Score afterward: Black 27 - White 26
+
+Move 50: Computer (White) -> H8
+Played: 2026-11-17T04:59:55.330Z
+Move source: AI search
+Discs flipped: 3 [G7, F6, E5]
+Score afterward: Black 24 - White 30
+AI chosen move: H8
+States examined: 22
+Search time: 5 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H8 → C2   value = 420
+H8 → G1   value = 432
+H8 → H7   value = 552
+==> root move H8 has value 420
+C1 → C2   value = 344
+==> root move C1 has value 344
+H3 → H4   value = 413
+H3   PRUNED C2, G1, H2, G2
+==> root move H3 has value 413
+H6 → H8   value = 344
+H6   PRUNED G1, H7
+==> root move H6 has value 344
+H4 → H3   value = 415
+H4   PRUNED H6, C2, G1
+==> root move H4 has value 415
+C2 → G1   value = 340
+==> root move C2 has value 340
+G1 → H1   value = 326
+G1   PRUNED C2, G2
+==> root move G1 has value 326
+H2 → H3   value = 398
+H2   PRUNED H4, C2, G1, G2
+==> root move H2 has value 398
+H7 → H8   value = 312
+H7   PRUNED H6, G1
+==> root move H7 has value 312
+G2 → H1   value = 198
+G2   PRUNED H8, H3, H6, H4, G1, H2, H7
+==> root move G2 has value 198
+End of search log: no search lines omitted by the line limit.
+
+Move 51: bomi (Black) -> C2
+Played: 2026-11-17T04:59:57.730Z
+Move source: Human click
+Discs flipped: 3 [D3, E4, F5]
+Score afterward: Black 28 - White 27
+
+Move 52: Computer (White) -> C1
+Played: 2026-11-17T04:59:58.203Z
+Move source: AI search
+Discs flipped: 5 [B1, D1, E1, B2, C2]
+Score afterward: Black 23 - White 33
+AI chosen move: C1
+States examined: 14
+Search time: 3 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+C1 → H7   value = 458
+==> root move C1 has value 458
+H3 → H4   value = 409
+H3   PRUNED G1, H2, H7, G2
+==> root move H3 has value 409
+H6 → G1   value = 418
+H6   PRUNED H7
+==> root move H6 has value 418
+H4 → H3   value = 409
+H4   PRUNED H6, G1, H7
+==> root move H4 has value 409
+G1 → H1   value = 306
+G1   PRUNED H7, G2
+==> root move G1 has value 306
+H2 → H3   value = 370
+H2   PRUNED H4, G1, H7, G2
+==> root move H2 has value 370
+G2 → H1   value = 218
+G2   PRUNED C1, H3, H6, H4, G1, H2, H7
+==> root move G2 has value 218
+End of search log: no search lines omitted by the line limit.
+
+Move 53: bomi (Black) -> H7
+Played: 2026-11-17T05:00:00.935Z
+Move source: Human click
+Discs flipped: 1 [G7]
+Score afterward: Black 25 - White 32
+
+Move 54: Computer (White) -> G1
+Played: 2026-11-17T05:00:01.410Z
+Move source: AI search
+Discs flipped: 2 [F2, E3]
+Score afterward: Black 23 - White 35
+AI chosen move: G1
+States examined: 14
+Search time: 1 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H3 → H4   value = 439
+H3 → H2   value = 482
+H3 → G2   value = 522
+==> root move H3 has value 439
+H6 → H4   value = 327
+==> root move H6 has value 327
+H4 → H3   value = 417
+H4   PRUNED H6, G1, H2, G2
+==> root move H4 has value 417
+G1 → G2   value = 484
+==> root move G1 has value 484
+H2 → H3   value = 408
+H2   PRUNED H4, G2
+==> root move H2 has value 408
+G2 → H1   value = 262
+G2   PRUNED H3, H6, H4, G1, H2
+==> root move G2 has value 262
+End of search log: no search lines omitted by the line limit.
+
+Move 55: bomi (Black) -> G2
+Played: 2026-11-17T05:00:03.639Z
+Move source: Human click
+Discs flipped: 1 [F2]
+Score afterward: Black 25 - White 34
+
+Move 56: Computer (White) -> H1
+Played: 2026-11-17T05:00:04.111Z
+Move source: AI search
+Discs flipped: 4 [G2, F3, E4, D5]
+Score afterward: Black 21 - White 39
+AI chosen move: H1
+States examined: 10
+Search time: 2 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H1 → H2   value = 600
+==> root move H1 has value 600
+H3 → H1   value = 370
+H3   PRUNED H4, H2
+==> root move H3 has value 370
+H6 → H4   value = 347
+==> root move H6 has value 347
+H4 → H3   value = 467
+H4   PRUNED H6, H2
+==> root move H4 has value 467
+H2 → H1   value = 352
+H2   PRUNED H3
+==> root move H2 has value 352
+End of search log: no search lines omitted by the line limit.
+
+Move 57: bomi (Black) -> H2
+Played: 2026-11-17T05:00:05.618Z
+Move source: Human click
+Discs flipped: 1 [G2]
+Score afterward: Black 23 - White 38
+
+Move 58: Computer (White) -> H4
+Played: 2026-11-17T05:00:06.093Z
+Move source: AI search
+Discs flipped: 5 [G3, F2, G4, F4, G5]
+Score afterward: Black 18 - White 44
+AI chosen move: H4
+States examined: 7
+Search time: 1 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H3 → H4   value = 457
+==> root move H3 has value 457
+H6 → H4   value = 463
+==> root move H6 has value 463
+H4 → H3   value = 571
+H4 → H6   value = 573
+==> root move H4 has value 571
+End of search log: no search lines omitted by the line limit.
+
+Move 59: bomi (Black) -> H3
+Played: 2026-11-17T05:00:07.279Z
+Move source: Human click
+Discs flipped: 4 [G3, F3, E3, G4]
+Score afterward: Black 23 - White 40
+
+Move 60: Computer (White) -> H6
+Played: 2026-11-17T05:00:07.748Z
+Move source: AI search
+Discs flipped: 3 [G6, G7, H7]
+Score afterward: Black 20 - White 44
+AI chosen move: H6
+States examined: 1
+Search time: 1 ms
+Search depth: 2
+Alpha-beta: On
+Debug for this search: On
+Search paths, heuristic values and pruned branches:
+H6   value = 10024
+==> root move H6 has value 10024
+End of search log: no search lines omitted by the line limit.
+
+GAME OVER
+Finished: Mon Nov 16 2026 23:00:07 GMT-0600 (Central Standard Time)
+Total moves: 60
+Final score: Black 20 - White 44
+Winner: Computer (White)

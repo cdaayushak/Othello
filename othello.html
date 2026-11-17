@@ -513,6 +513,189 @@ alpha-beta pruning.
           min-width: 180px;
         }
       }
+      /* keep the board and the thinking box next to each other */
+      .game-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 560px) minmax(200px, 260px);
+        align-items: start;
+        gap: 22px;
+        max-width: 842px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      .game-table {
+        min-width: 0;
+        text-align: center;
+      }
+
+      /* a little see-through card, using whichever theme I picked */
+      .thinking-box {
+        position: sticky;
+        top: 24px;
+        margin-top: 14px;
+        padding: 18px;
+        border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
+        border-radius: 22px;
+        background: color-mix(in srgb, var(--wood) 22%, transparent);
+        box-shadow: 0 6px 24px #0000000c;
+        backdrop-filter: blur(12px);
+        min-width: 0;
+        max-height: calc(100dvh - 164px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--btn) transparent;
+      }
+
+      .thinking-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .thinking-header h2 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 500;
+      }
+      .thinking-eyebrow {
+        margin: 0 0 4px;
+        font-size: 11px;
+        opacity: 0.65;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .thinking-status {
+        margin: 18px 0 10px;
+        font-size: 14px;
+      }
+      .thinking-copy {
+        margin: 10px 0;
+        font-size: 13px;
+        line-height: 1.7;
+        opacity: 0.8;
+      }
+      .thinking-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin: 16px 0;
+      }
+      .thinking-stats div {
+        padding: 10px;
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--text) 7%, transparent);
+      }
+      .thinking-stats dt {
+        font-size: 11px;
+        opacity: 0.65;
+      }
+      .thinking-stats dd {
+        margin: 4px 0 0;
+        font-size: 15px;
+      }
+      .thinking-toggle {
+        width: 100%;
+        font-size: 12px;
+        padding: 9px 10px;
+      }
+      .thinking-log {
+        margin-top: 14px;
+      }
+      .thinking-log h3 {
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .thinking-log pre {
+        max-height: 220px;
+        overflow: auto;
+        margin: 0;
+        padding: 10px;
+        border-radius: 12px;
+        background: #00000012;
+        font:
+          10px/1.7 ui-monospace,
+          Consolas,
+          monospace;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        scrollbar-width: thin;
+        scrollbar-color: var(--btn) transparent;
+      }
+
+      /* a small line drawing of a fox, with a slow breathing movement */
+      .thinking-fox {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        color: var(--text);
+        opacity: 0.75;
+      }
+      .thinking-fox g {
+        transform-origin: 32px 36px;
+        animation: fox-breathe 4s ease-in-out infinite;
+      }
+      .is-thinking .thinking-fox {
+        animation: fox-listen 2s ease-in-out infinite;
+      }
+      .thinking-dots {
+        display: inline-flex;
+        gap: 3px;
+        margin-left: 6px;
+      }
+      .thinking-dots i {
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+        border-radius: 50%;
+        animation: thinking-pulse 1.2s infinite;
+      }
+      .thinking-dots i:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .thinking-dots i:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes fox-breathe {
+        50% {
+          transform: scale(1.025);
+        }
+      }
+      @keyframes fox-listen {
+        50% {
+          transform: rotate(-5deg);
+        }
+      }
+      @keyframes thinking-pulse {
+        50% {
+          opacity: 0.25;
+          transform: translateY(-2px);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .game-layout {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 8px;
+        }
+        .thinking-box {
+          position: static;
+          margin-top: 0;
+          max-height: none;
+        }
+        .thinking-log pre {
+          max-height: 160px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .thinking-fox,
+        .thinking-fox g,
+        .thinking-dots i {
+          animation: none;
+        }
+      }
+
       /* the ending popup uses the same colors as the board */
       .game-over {
         width: min(420px, calc(100vw - 32px));
@@ -1321,7 +1504,16 @@ alpha-beta pruning.
       }
 
       // ===== game over popup =====
-      function GameOver({ black, white, mode, human, names, onRestart, onClose }) {
+      function GameOver({
+        black,
+        white,
+        mode,
+        human,
+        names,
+        onRestart,
+        onClose,
+        onDownload,
+      }) {
         // work out who won before showing the final message
         const dialog = useRef(null);
         const winner = black === white ? null : black > white ? B : W;
@@ -1393,11 +1585,388 @@ alpha-beta pruning.
               ${humanWon ? "You did it! Ready for another game?" : "Ready to play again?"}
             </p>
             <div class="row">
+              <button onClick=${onDownload}>Download game_trace.txt</button>
+            </div>
+            <div class="row">
               <button autofocus onClick=${onRestart}>Play again</button>
               <button onClick=${onClose}>View board</button>
             </div>
           </dialog>
         `;
+      }
+
+      // run the search away from the page so the little animation can keep moving
+      function startSearch(board, player, options, onResult) {
+        let worker = null;
+        let timer = null;
+        let cancelled = false;
+
+        // older browsers can still use the normal search if workers are unavailable
+        function fallback() {
+          worker?.terminate();
+          timer = setTimeout(() => {
+            if (cancelled) return;
+            const started = performance.now();
+            const result = bestMove(
+              board,
+              player,
+              options.depth,
+              options.ab,
+              options.dbg,
+            );
+            onResult(result, Math.round(performance.now() - started));
+          }, 30);
+        }
+
+        try {
+          // send just the game rules and search functions, not the screen code
+          const constants =
+            "const S=8,B=1,W=2,E=0,DIRS=" +
+            JSON.stringify(DIRS) +
+            ",WT=" +
+            JSON.stringify(WT) +
+            ";";
+          const functions = [
+            opp,
+            nm,
+            flips,
+            movesFor,
+            apply,
+            count,
+            over,
+            evaluate,
+            ordered,
+            bestMove,
+          ]
+            .map((fn) => fn.toString())
+            .join("\n");
+          const handler = `
+            onmessage = function(event) {
+              const { board, player, options } = event.data;
+              const started = performance.now();
+              const result = bestMove(board, player, options.depth, options.ab, options.dbg);
+              postMessage({ result, ms: Math.round(performance.now() - started) });
+            };
+          `;
+          const url = URL.createObjectURL(
+            new Blob([constants, functions, handler], { type: "text/javascript" }),
+          );
+
+          try {
+            worker = new Worker(url);
+          } finally {
+            URL.revokeObjectURL(url);
+          }
+
+          // show the finished results only if this game is still open
+          worker.onmessage = (event) => {
+            worker.terminate();
+            if (!cancelled) onResult(event.data.result, event.data.ms);
+          };
+          worker.onerror = (event) => {
+            event.preventDefault();
+            if (!cancelled) fallback();
+          };
+          worker.postMessage({ board, player, options });
+        } catch {
+          fallback();
+        }
+
+        // stop old work when I restart or leave the game
+        return () => {
+          cancelled = true;
+          clearTimeout(timer);
+          worker?.terminate();
+        };
+      }
+
+      // ===== the computer's little thinking box =====
+      function ThinkingBox({
+        busy,
+        done,
+        report,
+        lines,
+        depth,
+        ab,
+        dev,
+        dbg,
+        setDbg,
+        auto,
+        mode,
+      }) {
+        // show real search results here instead of making up what the computer thinks
+        const waiting =
+          mode === 1 ? "Waiting for your move" : "Ready to help either side";
+        const status = busy
+          ? "Checking possible moves"
+          : done
+            ? "Game finished"
+            : auto
+              ? "Getting ready"
+              : waiting;
+
+        return html`
+          <aside
+            class=${"thinking-box" + (busy ? " is-thinking" : "")}
+            aria-label="Computer search"
+          >
+            <div class="thinking-header">
+              <svg
+                class="thinking-fox"
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <g>
+                  <path
+                    d="M14 31 11 10 27 22 Q32 20 37 22 L53 10 50 31 Q48 45 32 53 Q16 45 14 31Z"
+                  />
+                  <path
+                    d="m15 17 3 13 10 8 4 11 4-11 10-8 3-13M19 34q4 4 8 1m10 0q4 3 8-1m-16 9h6l-3 3Z"
+                  />
+                </g>
+              </svg>
+              <div>
+                <p class="thinking-eyebrow">Search notes</p>
+                <h2>A little thinking</h2>
+              </div>
+            </div>
+            <div class="thinking-status" role="status" aria-live="polite">
+              ${status}
+              ${
+                busy &&
+                html`
+                  <span class="thinking-dots" aria-hidden="true">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </span>
+                `
+              }
+            </div>
+            <p class="thinking-copy">
+              ${
+                busy
+                  ? "Comparing possible replies, board positions and available moves."
+                  : report
+                    ? "Last search chose " +
+                      report.move +
+                      ". It compared square scores and possible replies."
+                    : "The computer's search results will appear here after a move."
+              }
+            </p>
+            <dl class="thinking-stats">
+              <div>
+                <dt>Positions checked</dt>
+                <dd>${report ? report.states.toLocaleString() : "—"}</dd>
+              </div>
+              <div>
+                <dt>Search time</dt>
+                <dd>${report ? report.ms + " ms" : "—"}</dd>
+              </div>
+              <div>
+                <dt>Depth ${report ? "searched" : "selected"}</dt>
+                <dd>${report ? report.depth : depth} turns</dd>
+              </div>
+              <div>
+                <dt>Alpha-beta ${report ? "used" : "selected"}</dt>
+                <dd>${(report ? report.ab : ab) ? "On" : "Off"}</dd>
+              </div>
+            </dl>
+            ${
+              dev
+                ? html`
+                    <button
+                      class="thinking-toggle"
+                      aria-pressed=${dbg}
+                      onClick=${() => setDbg(!dbg)}
+                    >
+                      Detailed search: ${dbg ? "On" : "Off"}
+                    </button>
+                  `
+                : html`
+                    <p class="thinking-copy">
+                      Turn on Dev mode for detailed search paths.
+                    </p>
+                  `
+            }
+            ${
+              dev &&
+              dbg &&
+              html`
+                <div class="thinking-log">
+                  <h3>Search paths & scores</h3>
+                  <pre tabindex="0" aria-label="Detailed search paths">
+${busy ? "Searching. Paths appear when this move is ready." : lines || "Ready for the next search. Each path will show its score here."}</pre>
+                </div>
+              `
+            }
+          </aside>
+        `;
+      }
+
+      // ===== keeping the real game history =====
+
+      // keep a snapshot so changes to the settings are written down too
+      function traceSettings(names, depth, ab, debug) {
+        return [
+          "Black player: " + (names[B] || "Black"),
+          "White player: " + (names[W] || "White"),
+          "Search depth: " + depth,
+          "Alpha-beta: " + (ab ? "On" : "Off"),
+          "Debug: " + (debug ? "On" : "Off"),
+        ].join("\n");
+      }
+
+      // this starts an empty history for this game, not a sample game
+      function createGameTrace(cfg, names, depth, ab, debug) {
+        const started = new Date();
+        const settings = traceSettings(names, depth, ab, debug);
+
+        return {
+          moves: 0,
+          finished: false,
+          settings,
+          entries: [
+            "Players: " +
+              (names[B] || "Black") +
+              " (Black) / " +
+              (names[W] || "White") +
+              " (White)",
+            "Started: " + started.toString(),
+            "Started (ISO): " + started.toISOString(),
+            "OTHELLO GAME TRACE",
+            "Mode: " + (cfg.mode === 1 ? "One-player (human vs computer)" : "Two-player"),
+            "Human color: " +
+              (cfg.mode === 1
+                ? cfg.human === B
+                  ? "Black"
+                  : "White"
+                : "Both Black and White (two-player mode)"),
+            settings,
+            "Coordinates: A-H are columns; 1-8 are rows, starting at the top left.",
+            "Opening score: Black 2 - White 2",
+            "Move events are cumulative. Search paths are recorded only when Debug is on for that search.",
+          ],
+        };
+      }
+
+      // only add a settings entry if something has actually changed
+      function updateTraceSettings(trace, names, depth, ab, debug) {
+        if (trace.finished) return;
+        const settings = traceSettings(names, depth, ab, debug);
+
+        if (settings !== trace.settings) {
+          trace.entries.push("\nSettings updated: " + new Date().toISOString(), settings);
+          trace.settings = settings;
+        }
+      }
+
+      // add this move and its search to the history without clearing earlier turns
+      function recordTraceMove(trace, board, nextBoard, move, player, names, ai) {
+        if (trace.finished) return;
+        const color = player === B ? "Black" : "White";
+        const flipped = flips(board, move[0], move[1], player);
+        const black = count(nextBoard, B);
+        const white = count(nextBoard, W);
+        trace.moves++;
+
+        trace.entries.push(
+          "\nMove " +
+            trace.moves +
+            ": " +
+            (names[player] || color) +
+            " (" +
+            color +
+            ") -> " +
+            nm(move),
+          "Played: " + new Date().toISOString(),
+          "Move source: " + (ai ? "AI search" : "Human click"),
+          "Discs flipped: " + flipped.length + " [" + flipped.map(nm).join(", ") + "]",
+          "Score afterward: Black " + black + " - White " + white,
+        );
+
+        if (ai) {
+          trace.entries.push(
+            "AI chosen move: " + nm(ai.result.move),
+            "States examined: " + ai.result.states,
+            "Search time: " + ai.ms + " ms",
+            "Search depth: " + ai.options.depth,
+            "Alpha-beta: " + (ai.options.ab ? "On" : "Off"),
+            "Debug for this search: " + (ai.options.dbg ? "On" : "Off"),
+          );
+
+          if (ai.options.dbg) {
+            trace.entries.push(
+              "Search paths, heuristic values and pruned branches:",
+              ...ai.result.lines,
+            );
+            trace.entries.push(
+              ai.result.dropped
+                ? "SEARCH LOG TRUNCATED: " +
+                    ai.result.dropped +
+                    " additional search lines omitted by the 1,500-line limit. This turn's search log is incomplete."
+                : "End of search log: no search lines omitted by the line limit.",
+            );
+          } else {
+            trace.entries.push(
+              "Search paths not recorded: Debug was off for this search.",
+            );
+          }
+        }
+
+        // a pass happens when the other side has no move but the game can continue
+        const nextPlayer = opp(player);
+        if (!over(nextBoard) && movesFor(nextBoard, nextPlayer).length === 0) {
+          const nextColor = nextPlayer === B ? "Black" : "White";
+          trace.entries.push(
+            "Forced pass: " +
+              (names[nextPlayer] || nextColor) +
+              " (" +
+              nextColor +
+              ") has no legal move. " +
+              color +
+              " plays again.",
+          );
+        }
+
+        // write the result once, right after the final real move
+        if (over(nextBoard)) {
+          const winner = black === white ? null : black > white ? B : W;
+          const winnerColor = winner === B ? "Black" : "White";
+          trace.entries.push(
+            "\nGAME OVER",
+            "Finished: " + new Date().toString(),
+            "Total moves: " + trace.moves,
+            "Final score: Black " + black + " - White " + white,
+            winner === null
+              ? "Result: Draw"
+              : "Winner: " + (names[winner] || winnerColor) + " (" + winnerColor + ")",
+          );
+          trace.finished = true;
+        }
+      }
+
+      // use a normal browser download instead of writing into the project folder
+      function downloadGameTrace(trace) {
+        if (!trace.finished) return;
+        const file = new Blob([trace.entries.join("\n") + "\n"], {
+          type: "text/plain;charset=utf-8",
+        });
+        const url = URL.createObjectURL(file);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "game_trace.txt";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        // give the browser time to start reading the file before cleaning up
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
 
       // ===== running the game =====
@@ -1421,9 +1990,25 @@ alpha-beta pruning.
         const [busy, setBusy] = useState(false);
         const [dbg, setDbg] = useState(false);
         const [ab, setAb] = useState(true);
-        const [info, setInfo] = useState("");
+        const [report, setReport] = useState(null);
         const [lines, setLines] = useState("");
         const [resultClosed, setResultClosed] = useState(false);
+        const cancelSearch = useRef(null);
+        const trace = useRef(null);
+        const latestNames = useRef(names);
+        latestNames.current = names;
+
+        // keep this history separate from the panel that shows just the last search
+        if (trace.current === null) {
+          trace.current = createGameTrace(cfg, names, depth, ab, dev && dbg);
+        }
+
+        useEffect(() => {
+          updateTraceSettings(trace.current, names, depth, ab, dev && dbg);
+        }, [names, depth, ab, dev, dbg]);
+
+        // do not leave a computer search running after I go back to the start
+        useEffect(() => () => cancelSearch.current?.(), []);
         const prev = useRef(null),
           opts = useRef({});
         opts.current = { dbg: dev && dbg, ab, depth }; // read the current settings when the computer starts searching
@@ -1439,20 +2024,24 @@ alpha-beta pruning.
 
         // start a fresh board but keep the names, theme and difficulty I picked
         function restart() {
+          cancelSearch.current?.();
+          trace.current = createGameTrace(cfg, names, depth, ab, dev && dbg);
           prev.current = null;
           setBoard(newBoard());
           setTurn(B);
           setNote("");
           setMoveNo(0);
           setBusy(false);
-          setInfo("");
+          setReport(null);
           setLines("");
           setResultClosed(false);
         }
 
         // put down the piece, then switch turns or pass if there is no move
-        function play(m) {
+        function play(m, ai = null) {
+          if (!m || over(board) || flips(board, m[0], m[1], turn).length === 0) return;
           const nb = apply(board, m, turn);
+          recordTraceMove(trace.current, board, nb, m, turn, latestNames.current, ai);
           let t = opp(turn),
             n = "";
           if (!over(nb) && !movesFor(nb, t).length) {
@@ -1469,20 +2058,15 @@ alpha-beta pruning.
         function think() {
           if (done || busy) return;
           setBusy(true);
-          setTimeout(() => {
-            const o = opts.current,
-              t0 = performance.now(),
-              r = bestMove(board, turn, o.depth, o.ab, o.dbg);
-            setInfo(
-              r.states +
-                " (" +
-                Math.round(performance.now() - t0) +
-                " ms, depth " +
-                o.depth +
-                ", alpha-beta " +
-                (o.ab ? "on" : "off") +
-                ")",
-            );
+          const o = { ...opts.current };
+          cancelSearch.current = startSearch(board, turn, o, (r, ms) => {
+            setReport({
+              states: r.states,
+              ms,
+              depth: o.depth,
+              ab: o.ab,
+              move: nm(r.move),
+            });
             setLines(
               o.dbg
                 ? r.lines.join("\n") +
@@ -1490,8 +2074,8 @@ alpha-beta pruning.
                 : "",
             );
             setBusy(false);
-            play(r.move);
-          }, 30);
+            play(r.move, { result: r, ms, options: o });
+          });
         }
 
         // in one player mode, start the computer turn after a short pause
@@ -1529,63 +2113,73 @@ alpha-beta pruning.
                   human=${human}
                   names=${names}
                   onRestart=${restart}
+                  onDownload=${() => downloadGameTrace(trace.current)}
                   onClose=${() => setResultClosed(true)}
                 />
               `
             }
-            <${Scoreboard} board=${board} names=${names} setNames=${setNames} />
-            <div id="frame">
-              <div class="stack k"></div>
-              <${Board}
-                board=${board}
-                legal=${legal}
-                humanTurn=${!busy && !auto}
-                prev=${prev.current}
-                moveNo=${moveNo}
-                onPlay=${play}
-              />
-              <div class="stack w"></div>
-            </div>
-            <${Controls}
-              dev=${dev}
-              dbg=${dbg}
-              setDbg=${setDbg}
-              ab=${ab}
-              setAb=${setAb}
-              depth=${depth}
-              setDepth=${setDepth}
-              busy=${busy}
-              done=${done}
-              onMove=${think}
-            />
-            ${
-              done &&
-              html`
-                <div class="row"><button onClick=${restart}>Restart game</button></div>
-              `
-            }
-            <div id="info">
-              ${
-                note
-                  ? html`
-                      <div>${note}</div>
-                    `
-                  : null
-              }${
-                dev && info
-                  ? html`
-                      <div>States examined: ${info}</div>
-                    `
-                  : null
-              }
-            </div>
-            ${
-              dev && dbg && lines
-                ? html`
-                    <pre id="debug">${lines}</pre>
+            <div class="game-layout">
+              <div class="game-table">
+                <${Scoreboard} board=${board} names=${names} setNames=${setNames} />
+                <div id="frame">
+                  <div class="stack k"></div>
+                  <${Board}
+                    board=${board}
+                    legal=${legal}
+                    humanTurn=${!busy && !auto}
+                    prev=${prev.current}
+                    moveNo=${moveNo}
+                    onPlay=${play}
+                  />
+                  <div class="stack w"></div>
+                </div>
+                <${Controls}
+                  dev=${dev}
+                  dbg=${dbg}
+                  setDbg=${setDbg}
+                  ab=${ab}
+                  setAb=${setAb}
+                  depth=${depth}
+                  setDepth=${setDepth}
+                  busy=${busy}
+                  done=${done}
+                  onMove=${think}
+                />
+                ${
+                  done &&
+                  html`
+                    <div class="row">
+                      <button onClick=${restart}>Restart game</button>
+                      <button onClick=${() => downloadGameTrace(trace.current)}>
+                        Download game_trace.txt
+                      </button>
+                    </div>
                   `
-                : null
-            }
+                }
+                <div id="info">
+                  ${
+                    note
+                      ? html`
+                          <div>${note}</div>
+                        `
+                      : null
+                  }
+                </div>
+              </div>
+              <${ThinkingBox}
+                busy=${busy}
+                done=${done}
+                report=${report}
+                lines=${lines}
+                depth=${depth}
+                ab=${ab}
+                dev=${dev}
+                dbg=${dbg}
+                setDbg=${setDbg}
+                auto=${auto}
+                mode=${mode}
+              />
+            </div>
           </section>
         `;
       }
